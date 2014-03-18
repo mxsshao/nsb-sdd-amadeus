@@ -96,6 +96,10 @@
       <AdditionalLibraryDirectories>c:\gwen\lib;c:\allegro\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>c:\gwen\lib\windows\vs2010\GWEND-Renderer-Allegrod.lib;c:\gwen\lib\windows\vs2010\gwen_staticd.lib;allegro-5.1.7-monolith-md-debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Message>VERSION</Message>
+      <Command>"$(SolutionDir).git\version.sh"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -168,6 +172,9 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="version.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="version.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
