@@ -1,7 +1,7 @@
 #pragma once
 
-#define _MAJOR 0
-#define _MINOR 1
-#define _BUILD 1
-#define _HASH 1
+#define FILEVER 0
+#define PRODUCTVER 0
+#define STRFILEVER "0"
+#define STRPRODUCTVER "0"
 ;
