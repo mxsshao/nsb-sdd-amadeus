@@ -70,7 +70,7 @@ void ATX::initialize(int displayW, int displayH)
 
 	final.push_front(4);
 	final.push_front(1);
-	final.push_front(3);
+	//final.push_front(3);
 
 	int value = 0;
 	double min = 0.0f;
