@@ -137,47 +137,59 @@ void ATX::handleEvents(ALLEGRO_EVENT &ev)
 		update();
 	}
 	else if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
+	{
+		switch (ev.keyboard.keycode)
 		{
-			switch (ev.keyboard.keycode)
-			{
-			case ALLEGRO_KEY_RIGHT:
-				keys[RIGHT] = true;
-				break;
-			case ALLEGRO_KEY_LEFT:
-				keys[LEFT] = true;
-				break;
-			case ALLEGRO_KEY_UP:
-				keys[UP] = true;
-				break;
-			case ALLEGRO_KEY_DOWN:
-				keys[DOWN] = true;
-				break;
-			case ALLEGRO_KEY_LSHIFT:
-				keys[LSHIFT] = true;
-				break;
-			}
+		case ALLEGRO_KEY_RIGHT:
+			keys[RIGHT] = true;
+			break;
+		case ALLEGRO_KEY_LEFT:
+			keys[LEFT] = true;
+			break;
+		case ALLEGRO_KEY_UP:
+			keys[UP] = true;
+			break;
+		case ALLEGRO_KEY_DOWN:
+			keys[DOWN] = true;
+			break;
+		case ALLEGRO_KEY_LSHIFT:
+			keys[LSHIFT] = true;
+			break;
 		}
+	}
 	else if (ev.type == ALLEGRO_EVENT_KEY_UP)
+	{
+		switch (ev.keyboard.keycode)
 		{
-			switch (ev.keyboard.keycode)
+		case ALLEGRO_KEY_RIGHT:
+			keys[RIGHT] = false;
+			break;
+		case ALLEGRO_KEY_LEFT:
+			keys[LEFT] = false;
+			break;
+		case ALLEGRO_KEY_UP:
+			keys[UP] = false;
+			break;
+		case ALLEGRO_KEY_DOWN:
+			keys[DOWN] = false;
+			break;
+		case ALLEGRO_KEY_LSHIFT:
+			keys[LSHIFT] = false;
+			break;
+		}
+	}
+	else if (ev.type == ALLEGRO_EVENT_MOUSE_AXES)
+	{
+		if (ev.mouse.dz != 0)
+		{
+			camera.z -= ev.mouse.dz / 5.0f;
+
+			if (camera.z < 0)
 			{
-			case ALLEGRO_KEY_RIGHT:
-				keys[RIGHT] = false;
-				break;
-			case ALLEGRO_KEY_LEFT:
-				keys[LEFT] = false;
-				break;
-			case ALLEGRO_KEY_UP:
-				keys[UP] = false;
-				break;
-			case ALLEGRO_KEY_DOWN:
-				keys[DOWN] = false;
-				break;
-			case ALLEGRO_KEY_LSHIFT:
-				keys[LSHIFT] = false;
-				break;
+				camera.z = 0;
 			}
 		}
+	}
 }
 
 void ATX::update()
@@ -313,7 +325,8 @@ void ATX::update()
 
 
 	al_identity_transform(&transform);
-	al_translate_transform(&transform, offsetWidth - camera.x, offsetHeight - camera.y);
+	al_scale_transform(&transform, 1.0f/(camera.z+1), 1.0f/(camera.z+1));
+	al_translate_transform(&transform, offsetWidth - test.location.x/(camera.z+1), offsetHeight - test.location.y/(camera.z+1));
 	al_use_transform(&transform);
 }
 
