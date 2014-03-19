@@ -119,7 +119,15 @@ void ATX::initialize(int displayW, int displayH)
 
 	test.path = path;
 
+	//CAMERA
+	camera.x = 0;
+	camera.y = 0;
+
+
+
+
 	std::cout << al_current_time() - time << std::endl;
+
 }
 
 void ATX::handleEvents(ALLEGRO_EVENT &ev)
@@ -128,6 +136,48 @@ void ATX::handleEvents(ALLEGRO_EVENT &ev)
 	{
 		update();
 	}
+	else if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
+		{
+			switch (ev.keyboard.keycode)
+			{
+			case ALLEGRO_KEY_RIGHT:
+				keys[RIGHT] = true;
+				break;
+			case ALLEGRO_KEY_LEFT:
+				keys[LEFT] = true;
+				break;
+			case ALLEGRO_KEY_UP:
+				keys[UP] = true;
+				break;
+			case ALLEGRO_KEY_DOWN:
+				keys[DOWN] = true;
+				break;
+			case ALLEGRO_KEY_LSHIFT:
+				keys[LSHIFT] = true;
+				break;
+			}
+		}
+	else if (ev.type == ALLEGRO_EVENT_KEY_UP)
+		{
+			switch (ev.keyboard.keycode)
+			{
+			case ALLEGRO_KEY_RIGHT:
+				keys[RIGHT] = false;
+				break;
+			case ALLEGRO_KEY_LEFT:
+				keys[LEFT] = false;
+				break;
+			case ALLEGRO_KEY_UP:
+				keys[UP] = false;
+				break;
+			case ALLEGRO_KEY_DOWN:
+				keys[DOWN] = false;
+				break;
+			case ALLEGRO_KEY_LSHIFT:
+				keys[LSHIFT] = false;
+				break;
+			}
+		}
 }
 
 void ATX::update()
@@ -203,11 +253,75 @@ void ATX::update()
 
 	test.location.x += test.speed * sin(test.currentHeading / 180.0f * ALLEGRO_PI);
 	test.location.y -= test.speed * cos(test.currentHeading / 180.0f * ALLEGRO_PI);
+
+
+
+	//CAMERA
+	if (keys[LSHIFT])
+	{
+		if ((keys[RIGHT] && keys[LEFT]) || (!keys[RIGHT] && !keys[LEFT]))
+		{
+		}
+		else if (keys[RIGHT])
+		{
+			camera.x += 30;
+		}
+		else if (keys[LEFT])
+		{
+			camera.x -= 30;
+		}
+
+		if ((keys[UP] && keys[DOWN]) || (!keys[UP] && !keys[DOWN]))
+		{
+		}
+		else if (keys[UP])
+		{
+			camera.y -= 30;
+		}
+		else if (keys[DOWN])
+		{
+			camera.y += 30;
+		}
+	}
+	else
+	{
+		if ((keys[RIGHT] && keys[LEFT]) || (!keys[RIGHT] && !keys[LEFT]))
+		{
+		}
+		else if (keys[RIGHT])
+		{
+			camera.x += 10;
+		}
+		else if (keys[LEFT])
+		{
+			camera.x -= 10;
+		}
+
+		if ((keys[UP] && keys[DOWN]) || (!keys[UP] && !keys[DOWN]))
+		{
+		}
+		else if (keys[UP])
+		{
+			camera.y -= 10;
+		}
+		else if (keys[DOWN])
+		{
+			camera.y += 10;
+		}
+	}
+
+
+
+	al_identity_transform(&transform);
+	al_translate_transform(&transform, offsetWidth - camera.x, offsetHeight - camera.y);
+	al_use_transform(&transform);
 }
 
 void ATX::render()
 {
 	al_draw_bitmap(bg,0,0,0);
+
+
 
 	std::list<Coord>::iterator iter;
 	

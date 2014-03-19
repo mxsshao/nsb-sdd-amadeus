@@ -70,6 +70,9 @@ protected:
 	ATX() {};
 
 private:
+	bool keys [5];
+	enum keys {UP, DOWN, LEFT, RIGHT, LSHIFT};
+
 	static ATX mATX;
 
 	int offsetWidth;
