@@ -70,6 +70,8 @@ protected:
 	ATX() {};
 
 private:
+	ALLEGRO_BITMAP* screen;
+
 	bool keys [5];
 	enum keys {UP, DOWN, LEFT, RIGHT, LSHIFT};
 

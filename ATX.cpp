@@ -4,6 +4,8 @@ ATX ATX::mATX;
 
 void ATX::initialize(int displayW, int displayH)
 {
+	screen = al_create_bitmap(displayW, displayH);
+
 	float time = al_current_time();
 
 	offsetWidth = displayW/2; offsetHeight = displayH/2;
@@ -327,11 +329,16 @@ void ATX::update()
 	al_identity_transform(&transform);
 	al_scale_transform(&transform, 1.0f/(camera.z+1), 1.0f/(camera.z+1));
 	al_translate_transform(&transform, offsetWidth - test.location.x/(camera.z+1), offsetHeight - test.location.y/(camera.z+1));
-	al_use_transform(&transform);
 }
 
 void ATX::render()
 {
+	ALLEGRO_BITMAP* back = al_get_target_bitmap();
+	al_set_target_bitmap(screen);
+	al_clear_to_color(al_map_rgb(0,0,0));
+
+	al_use_transform(&transform);
+
 	al_draw_bitmap(bg,0,0,0);
 
 
@@ -377,5 +384,8 @@ void ATX::render()
 
 	double Scale = 0.4f;
 	al_draw_tinted_scaled_rotated_bitmap_region(bitmap, x, y, 500, 500, al_map_rgb_f(1,1,1), 250, 250, test.location.x, test.location.y, Scale, Scale, test.currentHeading/180.0f*ALLEGRO_PI, 0);
+
+	al_set_target_bitmap(back);
+	al_draw_bitmap(screen,0,0,0);
 
 }
