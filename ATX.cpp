@@ -360,12 +360,14 @@ void ATX::render()
 			al_draw_tinted_scaled_rotated_bitmap_region(bar, offset, 0, calculateHypotenuse((*iter), (*p)), 16, al_map_rgb_f(1,1,1), 0, 8, (*iter).x, (*iter).y, 1.0, 1.0, (calculateHeading((*iter), (*p)) - 90.0f) / 180.0f * ALLEGRO_PI, 0);
 		}
 	}
-	al_hold_bitmap_drawing(false);
 	int i;
 	for (i = 0; i != 5; i++)
 	{
-		al_draw_circle(temp[i].location.x, temp[i].location.y, 6, al_map_rgb_f(1,1,1), 12);
+		al_draw_tinted_scaled_rotated_bitmap_region(bar, 64, 64, 64, 64, al_map_rgb_f(1,1,1), 32, 32, temp[i].location.x, temp[i].location.y, 1.0f, 1.0f, 0, 0);
+		//al_draw_circle(temp[i].location.x, temp[i].location.y, 6, al_map_rgb_f(1,1,1), 12);
 	}
+
+	al_hold_bitmap_drawing(false);
 
 	//AIRCRAFT RENDER
 	int x = 0;
