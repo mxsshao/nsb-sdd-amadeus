@@ -328,7 +328,7 @@ void ATX::update()
 
 	al_identity_transform(&transform);
 	al_scale_transform(&transform, 1.0f/(camera.z+1), 1.0f/(camera.z+1));
-	al_translate_transform(&transform, offsetWidth - test.location.x/(camera.z+1), offsetHeight - test.location.y/(camera.z+1));
+	al_translate_transform(&transform, offsetWidth - camera.x/(camera.z+1), offsetHeight - camera.y/(camera.z+1));
 }
 
 void ATX::render()
@@ -366,6 +366,9 @@ void ATX::render()
 		al_draw_tinted_scaled_rotated_bitmap_region(bar, 64, 64, 64, 64, al_map_rgb_f(1,1,1), 32, 32, temp[i].location.x, temp[i].location.y, 1.0f, 1.0f, 0, 0);
 		//al_draw_circle(temp[i].location.x, temp[i].location.y, 6, al_map_rgb_f(1,1,1), 12);
 	}
+
+	al_draw_tinted_scaled_rotated_bitmap_region(bar, 128, 64, 128, 128, al_map_rgb_f(1,1,1), 64, 128, 400, 200, 1.0f, 1.0f, 0, 0);
+	al_draw_tinted_scaled_rotated_bitmap_region(bar, 256, 64, 128, 128, al_map_rgb_f(1,1,1), 64, 128, 500, 200, 1.0f, 1.0f, 0, 0);
 
 	al_hold_bitmap_drawing(false);
 
