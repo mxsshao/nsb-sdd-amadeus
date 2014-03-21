@@ -372,6 +372,8 @@ void ATX::render()
 	al_draw_tinted_scaled_rotated_bitmap_region(bar, 128, 192, 128, 128, al_map_rgb_f(1,1,1), 64, 128, 400, 328, 1.0f, 1.0f, 0, 0);
 	al_draw_tinted_scaled_rotated_bitmap_region(bar, 256, 192, 128, 128, al_map_rgb_f(1,1,1), 64, 128, 500, 328, 1.0f, 1.0f, 0, 0);
 
+	al_draw_tinted_scaled_rotated_bitmap_region(bar, 384, 384, 640, 640, al_map_rgb_f(1,1,1), 320, 320, 1000, 328, 1.0f, 1.0f, 0, 0);
+
 	al_hold_bitmap_drawing(false);
 
 	//AIRCRAFT RENDER
