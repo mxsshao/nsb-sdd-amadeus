@@ -278,11 +278,11 @@ void ATX::update()
 		}
 		else if (keys[RIGHT])
 		{
-			camera.x += 30;
+			camera.x += 30.0f*(camera.z+1);
 		}
 		else if (keys[LEFT])
 		{
-			camera.x -= 30;
+			camera.x -= 30.0f*(camera.z+1);
 		}
 
 		if ((keys[UP] && keys[DOWN]) || (!keys[UP] && !keys[DOWN]))
@@ -290,11 +290,11 @@ void ATX::update()
 		}
 		else if (keys[UP])
 		{
-			camera.y -= 30;
+			camera.y -= 30.0f*(camera.z+1);
 		}
 		else if (keys[DOWN])
 		{
-			camera.y += 30;
+			camera.y += 30.0f*(camera.z+1);
 		}
 	}
 	else
@@ -304,11 +304,11 @@ void ATX::update()
 		}
 		else if (keys[RIGHT])
 		{
-			camera.x += 10;
+			camera.x += 10.0f*(camera.z+1);
 		}
 		else if (keys[LEFT])
 		{
-			camera.x -= 10;
+			camera.x -= 10.0f*(camera.z+1);
 		}
 
 		if ((keys[UP] && keys[DOWN]) || (!keys[UP] && !keys[DOWN]))
@@ -316,11 +316,11 @@ void ATX::update()
 		}
 		else if (keys[UP])
 		{
-			camera.y -= 10;
+			camera.y -= 10.0f*(camera.z+1);
 		}
 		else if (keys[DOWN])
 		{
-			camera.y += 10;
+			camera.y += 10.0f*(camera.z+1);
 		}
 	}
 
