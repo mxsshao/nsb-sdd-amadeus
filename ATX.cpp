@@ -363,12 +363,14 @@ void ATX::render()
 	int i;
 	for (i = 0; i != 5; i++)
 	{
-		al_draw_tinted_scaled_rotated_bitmap_region(bar, 64, 64, 64, 64, al_map_rgb_f(1,1,1), 32, 32, temp[i].location.x, temp[i].location.y, 1.0f, 1.0f, 0, 0);
+		al_draw_tinted_scaled_rotated_bitmap_region(bar, 0, 320, 64, 64, al_map_rgb_f(1,1,1), 32, 32, temp[i].location.x, temp[i].location.y, 1.0f, 1.0f, 0, 0);
 		//al_draw_circle(temp[i].location.x, temp[i].location.y, 6, al_map_rgb_f(1,1,1), 12);
 	}
 
 	al_draw_tinted_scaled_rotated_bitmap_region(bar, 128, 64, 128, 128, al_map_rgb_f(1,1,1), 64, 128, 400, 200, 1.0f, 1.0f, 0, 0);
 	al_draw_tinted_scaled_rotated_bitmap_region(bar, 256, 64, 128, 128, al_map_rgb_f(1,1,1), 64, 128, 500, 200, 1.0f, 1.0f, 0, 0);
+	al_draw_tinted_scaled_rotated_bitmap_region(bar, 128, 192, 128, 128, al_map_rgb_f(1,1,1), 64, 128, 400, 328, 1.0f, 1.0f, 0, 0);
+	al_draw_tinted_scaled_rotated_bitmap_region(bar, 256, 192, 128, 128, al_map_rgb_f(1,1,1), 64, 128, 500, 328, 1.0f, 1.0f, 0, 0);
 
 	al_hold_bitmap_drawing(false);
 
