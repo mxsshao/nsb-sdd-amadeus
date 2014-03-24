@@ -63,8 +63,24 @@ int main(int argc, char **argv)
 	al_flip_display();
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 
+	//GWEN
+	Gwen::Renderer::Allegro* renderer = new Gwen::Renderer::Allegro();
+	Gwen::Skin::TexturedBase defaultskin(renderer);
+	defaultskin.SetRender(renderer);
+	defaultskin.Init("Resources/defaultskin.png");
+	defaultskin.SetDefaultFont(L"Resources/OpenSans.ttf", 14);
+	Gwen::Controls::Canvas* canvas = new Gwen::Controls::Canvas(&defaultskin);
+	canvas->SetSize(al_get_display_width(display), al_get_display_height(display));
+	canvas->SetDrawBackground(false);
+	canvas->SetKeyboardInputEnabled(true);
+
+	Gwen::Input::Allegro GwenInput;
+	GwenInput.Initialize(canvas);
+
+	std::cout << "GWEN Init successful" << std::endl;
+
 	//INIT
-	ATX::getInstance()->initialize(al_get_display_width(display), al_get_display_height(display));
+	ATX::getInstance()->initialize(al_get_display_width(display), al_get_display_height(display), canvas);
 
 	//EVENT INIT
 	event_queue = al_create_event_queue();
@@ -81,6 +97,8 @@ int main(int argc, char **argv)
 
 	std::cout << "Loading Done" << std::endl;
 
+	bool render = false;
+
 	//EVENT LOOP
 	while (!done)
 	{
@@ -91,14 +109,25 @@ int main(int argc, char **argv)
 		{
 			done = true;
 		}
+		else if (ev.type == ALLEGRO_EVENT_TIMER)
+		{
+			ATX::getInstance()->handleEvents(ev);
+			//render = true;
+		}
 		else
 		{
 			ATX::getInstance()->handleEvents(ev);
 		}
 
-		if (al_is_event_queue_empty(event_queue))
+		GwenInput.ProcessMessage(ev);
+
+		if (al_is_event_queue_empty(event_queue) /*&& render == true*/)
 		{
+			//render = false;
+			
 			ATX::getInstance()->render();
+
+			canvas->RenderCanvas();
 
 			frames ++;
 			if(al_current_time() - gameTime >= 1)

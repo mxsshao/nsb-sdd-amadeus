@@ -24,6 +24,7 @@
 #include "Gwen/Controls/ComboBox.h"
 #include "Gwen/Controls/GroupBox.h"
 #include "Gwen/Controls/HorizontalSlider.h"
+#include "Gwen/Controls/VerticalSlider.h"
 #include "Gwen/Controls/ImagePanel.h"
 
 #include <iostream>

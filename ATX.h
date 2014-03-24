@@ -70,13 +70,16 @@ protected:
 	ATX() {};
 
 private:
+	static ATX mATX;
+
 	ALLEGRO_BITMAP* screen;
 
 	bool keys [5];
 	enum keys {UP, DOWN, LEFT, RIGHT, LSHIFT};
 	bool rClick;
 
-	static ATX mATX;
+	Gwen::Controls::Canvas* canvas;
+	Gwen::Controls::VerticalSlider* slider;
 
 	int offsetWidth;
 	int offsetHeight;
@@ -129,7 +132,7 @@ private:
 public:
 	static ATX* getInstance() {return &mATX;};
 
-	void initialize(int displayW, int displayH);
+	void initialize(int displayW, int displayH, Gwen::Controls::Canvas* pCanvas);
 	void handleEvents(ALLEGRO_EVENT &ev);
 	void render();
 

@@ -2,8 +2,10 @@
 
 ATX ATX::mATX;
 
-void ATX::initialize(int displayW, int displayH)
+void ATX::initialize(int displayW, int displayH, Gwen::Controls::Canvas* pCanvas)
 {
+	canvas = pCanvas;
+
 	screen = al_create_bitmap(displayW, displayH);
 
 	float time = al_current_time();
@@ -125,7 +127,12 @@ void ATX::initialize(int displayW, int displayH)
 	camera.x = 0;
 	camera.y = 0;
 
-
+	//SLIDER
+	slider = new Gwen::Controls::VerticalSlider(canvas);
+	slider->SetRange(0, 100);
+	//slider->SetNotchCount(500);
+	//slider->SetClampToNotches(true);
+	slider->SetBounds(20, 150, 50, 300);
 
 
 	std::cout << al_current_time() - time << std::endl;
@@ -185,6 +192,7 @@ void ATX::handleEvents(ALLEGRO_EVENT &ev)
 		if (ev.mouse.button == 2)
 		{
 			rClick = true;
+			al_set_system_mouse_cursor(al_get_current_display(), ALLEGRO_SYSTEM_MOUSE_CURSOR_MOVE);
 		}
 	}
 	else if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP)
@@ -192,13 +200,14 @@ void ATX::handleEvents(ALLEGRO_EVENT &ev)
 		if (ev.mouse.button == 2)
 		{
 			rClick = false;
+			al_set_system_mouse_cursor(al_get_current_display(), ALLEGRO_SYSTEM_MOUSE_CURSOR_DEFAULT);
 		}
 	}
 	else if (ev.type == ALLEGRO_EVENT_MOUSE_AXES)
 	{
 		if (ev.mouse.dz != 0)
 		{
-			camera.z -= ev.mouse.dz / 5.0f;
+			camera.z -= ev.mouse.dz / 3.0f;
 
 			if (camera.z < 0)
 			{
@@ -415,4 +424,5 @@ void ATX::render()
 	al_set_target_bitmap(back);
 	al_draw_bitmap(screen,0,0,0);
 
+	al_draw_circle(offsetWidth, offsetHeight, 10, al_map_rgb(255,0,255), 10);
 }
