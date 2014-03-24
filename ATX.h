@@ -74,6 +74,7 @@ private:
 
 	bool keys [5];
 	enum keys {UP, DOWN, LEFT, RIGHT, LSHIFT};
+	bool rClick;
 
 	static ATX mATX;
 

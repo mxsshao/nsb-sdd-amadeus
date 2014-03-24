@@ -180,6 +180,20 @@ void ATX::handleEvents(ALLEGRO_EVENT &ev)
 			break;
 		}
 	}
+	else if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
+	{
+		if (ev.mouse.button == 2)
+		{
+			rClick = true;
+		}
+	}
+	else if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP)
+	{
+		if (ev.mouse.button == 2)
+		{
+			rClick = false;
+		}
+	}
 	else if (ev.type == ALLEGRO_EVENT_MOUSE_AXES)
 	{
 		if (ev.mouse.dz != 0)
@@ -190,6 +204,11 @@ void ATX::handleEvents(ALLEGRO_EVENT &ev)
 			{
 				camera.z = 0;
 			}
+		}
+		if (rClick)
+		{
+			camera.x -= ev.mouse.dx*(camera.z+1);
+			camera.y -= ev.mouse.dy*(camera.z+1);
 		}
 	}
 }
@@ -324,8 +343,6 @@ void ATX::update()
 		}
 	}
 
-
-
 	al_identity_transform(&transform);
 	al_scale_transform(&transform, 1.0f/(camera.z+1), 1.0f/(camera.z+1));
 	al_translate_transform(&transform, offsetWidth - camera.x/(camera.z+1), offsetHeight - camera.y/(camera.z+1));
@@ -372,6 +389,7 @@ void ATX::render()
 	al_draw_tinted_scaled_rotated_bitmap_region(bar, 128, 192, 128, 128, al_map_rgb_f(1,1,1), 64, 128, 400, 328, 1.0f, 1.0f, 0, 0);
 	al_draw_tinted_scaled_rotated_bitmap_region(bar, 256, 192, 128, 128, al_map_rgb_f(1,1,1), 64, 128, 500, 328, 1.0f, 1.0f, 0, 0);
 
+	al_draw_tinted_scaled_rotated_bitmap_region(bar, 0, 832, 128, 192, al_map_rgb_f(1,1,1), 64, 96, 1000, 328, 1.0f, 1.0f, 0, 0);
 	al_draw_tinted_scaled_rotated_bitmap_region(bar, 384, 384, 640, 640, al_map_rgb_f(1,1,1), 320, 320, 1000, 328, 1.0f, 1.0f, 0, 0);
 
 	al_hold_bitmap_drawing(false);

@@ -86,15 +86,15 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>c:\gwen\include;c:\allegro\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\SDD-LIB\gwen\include;D:\SDD-LIB\allegro\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>c:\gwen\lib;c:\allegro\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>c:\gwen\lib\windows\vs2010\GWEND-Renderer-Allegrod.lib;c:\gwen\lib\windows\vs2010\gwen_staticd.lib;allegro-5.1.7-monolith-md-debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\SDD-LIB\gwen\lib;D:\SDD-LIB\allegro\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>D:\SDD-LIB\gwen\lib\windows\vs2010\GWEND-Renderer-Allegrod.lib;D:\SDD-LIB\gwen\lib\windows\vs2010\gwen_staticd.lib;allegro-5.1.7-monolith-md-debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Message>VERSION</Message>
