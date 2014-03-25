@@ -1,6 +1,7 @@
 #include "global.h"
 #include "ctrldisplay.h"
 #include "ATX.h"
+#include "ATX_flight_display.h"
 
 int main(int argc, char **argv)
 {
@@ -81,6 +82,7 @@ int main(int argc, char **argv)
 
 	//INIT
 	ATX::getInstance()->initialize(al_get_display_width(display), al_get_display_height(display), canvas);
+	ATX_flight_display::getInstance()->initialize();
 
 	//EVENT INIT
 	event_queue = al_create_event_queue();
@@ -97,8 +99,6 @@ int main(int argc, char **argv)
 
 	std::cout << "Loading Done" << std::endl;
 
-	bool render = false;
-
 	//EVENT LOOP
 	while (!done)
 	{
@@ -109,23 +109,18 @@ int main(int argc, char **argv)
 		{
 			done = true;
 		}
-		else if (ev.type == ALLEGRO_EVENT_TIMER)
-		{
-			ATX::getInstance()->handleEvents(ev);
-			//render = true;
-		}
 		else
 		{
 			ATX::getInstance()->handleEvents(ev);
+			ATX_flight_display::getInstance()->handleEvents(ev);
 		}
 
 		GwenInput.ProcessMessage(ev);
 
-		if (al_is_event_queue_empty(event_queue) /*&& render == true*/)
+		if (al_is_event_queue_empty(event_queue))
 		{
-			//render = false;
-			
 			ATX::getInstance()->render();
+			ATX_flight_display::getInstance()->render();
 
 			canvas->RenderCanvas();
 

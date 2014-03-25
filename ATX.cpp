@@ -134,7 +134,6 @@ void ATX::initialize(int displayW, int displayH, Gwen::Controls::Canvas* pCanvas
 	//slider->SetClampToNotches(true);
 	slider->SetBounds(20, 150, 50, 300);
 
-
 	std::cout << al_current_time() - time << std::endl;
 
 }
