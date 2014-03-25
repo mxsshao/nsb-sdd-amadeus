@@ -424,4 +424,5 @@ void ATX::render()
 	al_draw_bitmap(screen,0,0,0);
 
 	al_draw_circle(offsetWidth, offsetHeight, 10, al_map_rgb(255,0,255), 10);
+
 }

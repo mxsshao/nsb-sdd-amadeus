@@ -82,7 +82,7 @@ int main(int argc, char **argv)
 
 	//INIT
 	ATX::getInstance()->initialize(al_get_display_width(display), al_get_display_height(display), canvas);
-	ATX_flight_display::getInstance()->initialize();
+	ATX_flight_display::getInstance()->initialize(canvas);
 
 	//EVENT INIT
 	event_queue = al_create_event_queue();
@@ -121,8 +121,6 @@ int main(int argc, char **argv)
 		{
 			ATX::getInstance()->render();
 			ATX_flight_display::getInstance()->render();
-
-			canvas->RenderCanvas();
 
 			frames ++;
 			if(al_current_time() - gameTime >= 1)
