@@ -23,9 +23,25 @@ struct GuiImage
 		GuiImage::dx = dx;
 		GuiImage::dy = dy;
 	};
-	void Render(ALLEGRO_BITMAP* bitmap)
+};
+
+struct GuiText
+{
+	float dx;
+	float dy;
+	int align;
+	int size;
+	ALLEGRO_COLOR color;
+	GuiText()
 	{
-		al_draw_bitmap_region(bitmap, sx, sy, sw, sh, dx, dy, 0);
+	};
+	GuiText(float dx, float dy, int align, int size, int r, int g, int b)
+	{
+		GuiText::dx = dx;
+		GuiText::dy = dy;
+		GuiText::align = align;
+		GuiText::size = size;
+		GuiText::color = al_map_rgb(r, g, b);
 	};
 };
 
@@ -37,8 +53,11 @@ protected:
 private:
 	static ATX_flight_display mATX_flight_display;
 	ALLEGRO_BITMAP* bitmap;
+	ALLEGRO_FONT* fonts[2];
 	GuiImage base;
 	GuiImage barGreen;
+	GuiText aircraft;
+	GuiText flight;
 
 public:
 	static ATX_flight_display* getInstance() {return &mATX_flight_display;};

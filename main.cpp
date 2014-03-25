@@ -54,7 +54,7 @@ int main(int argc, char **argv)
 	std::cout << "Display created " << al_get_display_width(display) << "*" << al_get_display_height(display) << std::endl;
 	
 	//IMAGE SETTINGS
-	al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR | ALLEGRO_MAG_LINEAR | ALLEGRO_MIPMAP | ALLEGRO_CONVERT_BITMAP);
+	al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR | ALLEGRO_MAG_LINEAR | ALLEGRO_MIPMAP);
 
 	//RESOURCES
 	font = al_load_font("Resources/DolceVita.ttf", 24, 0);
