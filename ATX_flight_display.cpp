@@ -39,8 +39,8 @@ void ATX_flight_display::initialize(Gwen::Controls::Base* pCanvas)
 	window->SetTitle(L"Options");
 	//window->MakeModal(false);
 	window->SetClosable(false);
-	window->SetSize(500, 500);
 	//window->DisableResizing();
+	window->SetSize(500, 500);
 	window->SetMinimumSize(Gwen::Point(100,100));
 
 	bg = al_create_bitmap(510, 80);
