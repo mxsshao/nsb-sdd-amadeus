@@ -55,6 +55,7 @@ private:
 
 	Gwen::Controls::Base* canvas;
 	Gwen::Controls::Button* button;
+	Gwen::Controls::Button* button2;
 
 	ALLEGRO_BITMAP* bitmap;
 	ALLEGRO_FONT* fonts[2];

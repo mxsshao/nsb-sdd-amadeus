@@ -40,17 +40,25 @@ void ATX_flight_display::initialize(Gwen::Controls::Base* pCanvas)
 	//window->MakeModal(false);
 	window->SetClosable(false);
 	//window->DisableResizing();
-	window->SetSize(500, 500);
+	window->SetSize(600, 500);
 	window->SetMinimumSize(Gwen::Point(100,100));
+	window->SetPadding(Gwen::Padding());
 
-	bg = al_create_bitmap(510, 80);
+	bg = al_create_bitmap(508, 66);
 
 	button = new Gwen::Controls::Button(window);
-	button->SetBounds(0, 0, 510, 80);
-	//button->Hide();
+	button->SetSize(508, 66);
+	button->Dock(Gwen::Pos::Top);
 	button->SetImage(bg);
 	button->SetPadding(Gwen::Padding());
 	button->SetMargin(Gwen::Margin());
+
+	button2 = new Gwen::Controls::Button(window);
+	button2->SetSize(508, 66);
+	button2->Dock(Gwen::Pos::Top);
+	button2->SetImage(bg);
+	button2->SetPadding(Gwen::Padding());
+	button2->SetMargin(Gwen::Margin());
 
 	//window->IsHovered();
 }
