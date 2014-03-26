@@ -73,16 +73,21 @@ int main(int argc, char **argv)
 	Gwen::Controls::Canvas* canvas = new Gwen::Controls::Canvas(&defaultskin);
 	canvas->SetSize(al_get_display_width(display), al_get_display_height(display));
 	canvas->SetDrawBackground(false);
-	canvas->SetKeyboardInputEnabled(true);
+
+	Gwen::Controls::Base* base = new Gwen::Controls::Base(canvas);
+	base->SetSize(al_get_display_width(display), al_get_display_height(display));
+	base->SetCursor(Gwen::CursorType::Normal);
 
 	Gwen::Input::Allegro GwenInput;
 	GwenInput.Initialize(canvas);
 
+	al_grab_mouse(display);
+
 	std::cout << "GWEN Init successful" << std::endl;
 
 	//INIT
-	ATX::getInstance()->initialize(al_get_display_width(display), al_get_display_height(display), canvas);
-	ATX_flight_display::getInstance()->initialize(canvas);
+	ATX::getInstance()->initialize(al_get_display_width(display), al_get_display_height(display), base);
+	ATX_flight_display::getInstance()->initialize(base);
 
 	//EVENT INIT
 	event_queue = al_create_event_queue();

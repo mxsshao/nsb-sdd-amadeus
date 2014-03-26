@@ -2,7 +2,7 @@
 
 ATX ATX::mATX;
 
-void ATX::initialize(int displayW, int displayH, Gwen::Controls::Canvas* pCanvas)
+void ATX::initialize(int displayW, int displayH, Gwen::Controls::Base* pCanvas)
 {
 	canvas = pCanvas;
 
@@ -191,7 +191,8 @@ void ATX::handleEvents(ALLEGRO_EVENT &ev)
 		if (ev.mouse.button == 2)
 		{
 			rClick = true;
-			al_set_system_mouse_cursor(al_get_current_display(), ALLEGRO_SYSTEM_MOUSE_CURSOR_MOVE);
+			//al_set_system_mouse_cursor(al_get_current_display(), ALLEGRO_SYSTEM_MOUSE_CURSOR_MOVE);
+			canvas->SetCursor(Gwen::CursorType::SizeAll);
 		}
 	}
 	else if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP)
@@ -199,7 +200,8 @@ void ATX::handleEvents(ALLEGRO_EVENT &ev)
 		if (ev.mouse.button == 2)
 		{
 			rClick = false;
-			al_set_system_mouse_cursor(al_get_current_display(), ALLEGRO_SYSTEM_MOUSE_CURSOR_DEFAULT);
+			//al_set_system_mouse_cursor(al_get_current_display(), ALLEGRO_SYSTEM_MOUSE_CURSOR_DEFAULT);
+			canvas->SetCursor(Gwen::CursorType::Normal);
 		}
 	}
 	else if (ev.type == ALLEGRO_EVENT_MOUSE_AXES)

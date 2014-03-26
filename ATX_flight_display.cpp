@@ -2,7 +2,7 @@
 
 ATX_flight_display ATX_flight_display::mATX_flight_display;
 
-void ATX_flight_display::initialize(Gwen::Controls::Canvas* pCanvas)
+void ATX_flight_display::initialize(Gwen::Controls::Base* pCanvas)
 {
 	canvas = pCanvas;
 
@@ -37,10 +37,11 @@ void ATX_flight_display::initialize(Gwen::Controls::Canvas* pCanvas)
 	
 	window = new Gwen::Controls::WindowControl(canvas);
 	window->SetTitle(L"Options");
-	window->MakeModal(false);
-	window->SetDeleteOnClose(true);
+	//window->MakeModal(false);
 	window->SetClosable(false);
 	window->SetSize(500, 500);
+	//window->DisableResizing();
+	window->SetMinimumSize(Gwen::Point(100,100));
 
 	bg = al_create_bitmap(510, 80);
 
@@ -50,6 +51,8 @@ void ATX_flight_display::initialize(Gwen::Controls::Canvas* pCanvas)
 	button->SetImage(bg);
 	button->SetPadding(Gwen::Padding());
 	button->SetMargin(Gwen::Margin());
+
+	//window->IsHovered();
 }
 
 void ATX_flight_display::handleEvents(ALLEGRO_EVENT &ev)
@@ -80,6 +83,6 @@ void ATX_flight_display::render()
 
 
 	al_set_target_bitmap(display);
-	canvas->RenderCanvas();
+	canvas->GetCanvas()->RenderCanvas();
 	//al_draw_scaled_bitmap(bg, 0, 0, 510, 80, window->GetBounds().x + window->GetInnerBounds().x + button->GetBounds().x, window->GetBounds().y + window->GetInnerBounds().y + button->GetBounds().y, button->GetBounds().w, button->GetBounds().h, 0);
 }

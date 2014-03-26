@@ -53,7 +53,7 @@ protected:
 private:
 	static ATX_flight_display mATX_flight_display;
 
-	Gwen::Controls::Canvas* canvas;
+	Gwen::Controls::Base* canvas;
 	Gwen::Controls::Button* button;
 
 	ALLEGRO_BITMAP* bitmap;
@@ -70,7 +70,7 @@ private:
 public:
 	static ATX_flight_display* getInstance() {return &mATX_flight_display;};
 
-	void initialize(Gwen::Controls::Canvas* pCanvas);
+	void initialize(Gwen::Controls::Base* pCanvas);
 	void handleEvents(ALLEGRO_EVENT &ev);
 	void render();
 

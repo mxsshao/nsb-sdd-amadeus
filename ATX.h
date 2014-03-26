@@ -78,7 +78,7 @@ private:
 	enum keys {UP, DOWN, LEFT, RIGHT, LSHIFT};
 	bool rClick;
 
-	Gwen::Controls::Canvas* canvas;
+	Gwen::Controls::Base* canvas;
 	Gwen::Controls::VerticalSlider* slider;
 
 	int offsetWidth;
@@ -132,7 +132,7 @@ private:
 public:
 	static ATX* getInstance() {return &mATX;};
 
-	void initialize(int displayW, int displayH, Gwen::Controls::Canvas* pCanvas);
+	void initialize(int displayW, int displayH, Gwen::Controls::Base* pCanvas);
 	void handleEvents(ALLEGRO_EVENT &ev);
 	void render();
 
