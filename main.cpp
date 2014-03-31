@@ -40,11 +40,11 @@ int main(int argc, char **argv)
 	ALLEGRO_FONT* font;
 
 	//Display
-	//al_set_new_display_flags(ALLEGRO_RESIZABLE);
+	//al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
 	//al_set_new_display_option(ALLEGRO_SAMPLE_BUFFERS, 1, ALLEGRO_SUGGEST);
 	//al_set_new_display_option(ALLEGRO_SAMPLES, 8, ALLEGRO_SUGGEST);
 
-	display = al_create_display(1200, 700);
+	display = al_create_display(1280, 720);
 	if (!display)
 	{
 		al_show_native_message_box(NULL, "ERROR", "A02:", "Error creating display.", NULL, ALLEGRO_MESSAGEBOX_ERROR);

@@ -52,6 +52,7 @@ void ATX_flight_display::initialize(Gwen::Controls::Base* pCanvas)
 	button->SetImage(bg);
 	button->SetPadding(Gwen::Padding());
 	button->SetMargin(Gwen::Margin());
+	button->onPress.Add(this, &ATX_flight_display::Click);
 
 	button2 = new Gwen::Controls::Button(window);
 	button2->SetSize(508, 66);
@@ -60,11 +61,35 @@ void ATX_flight_display::initialize(Gwen::Controls::Base* pCanvas)
 	button2->SetPadding(Gwen::Padding());
 	button2->SetMargin(Gwen::Margin());
 
+	click = false;
+	c = 1.0f;
 	//window->IsHovered();
+}
+
+void ATX_flight_display::Click()
+{
+	click = !click;
 }
 
 void ATX_flight_display::handleEvents(ALLEGRO_EVENT &ev)
 {
+	if (ev.type==ALLEGRO_EVENT_TIMER)
+	{
+		if (click)
+		{
+			if (c > -1.0f)
+			{
+				c -= 0.1f;
+			}
+		}
+		else
+		{
+			if (c < 1.0f)
+			{
+				c += 0.1f;
+			}
+		}
+	}
 }
 
 void ATX_flight_display::render()
@@ -74,19 +99,38 @@ void ATX_flight_display::render()
 
 	al_set_target_bitmap(bg);
 
-	/*ALLEGRO_TRANSFORM transform;
-	al_identity_transform(&transform);
-	al_scale_transform(&transform, 1.0f, 0.5f);
-	al_translate_transform(&transform, 0.0f, 40 * 0.5f);
-	al_use_transform(&transform);*/
+	if (c >= 0.0f)
+	{
+		ALLEGRO_TRANSFORM transform;
+		al_identity_transform(&transform);
+		al_scale_transform(&transform, 1.0f, c);
+		al_translate_transform(&transform, 0.0f, 40 * (1-c));
+		al_use_transform(&transform);
 
-	al_clear_to_color(al_map_rgba(0, 0, 0, 0));
+		al_clear_to_color(al_map_rgba(0, 0, 0, 0));
 
-	al_draw_bitmap_region(bitmap, base.sx, base.sy, base.sw, base.sh, base.dx, base.dy, 0);
-	al_draw_bitmap_region(bitmap, barGreen.sx, barGreen.sy, barGreen.sw, barGreen.sh, barGreen.dx, barGreen.dy, 0);
+		al_draw_bitmap_region(bitmap, base.sx, base.sy, base.sw, base.sh, base.dx, base.dy, 0);
+		al_draw_bitmap_region(bitmap, barGreen.sx, barGreen.sy, barGreen.sw, barGreen.sh, barGreen.dx, barGreen.dy, 0);
 
-	al_draw_text(fonts[aircraft.size], aircraft.color, aircraft.dx, aircraft.dy, aircraft.align, "Boeing 777-200 LR");
-	al_draw_text(fonts[flight.size], flight.color, flight.dx, flight.dy, flight.align, "DL 716");
+		al_draw_text(fonts[aircraft.size], aircraft.color, aircraft.dx, aircraft.dy, aircraft.align, "Boeing 777-200 LR");
+		al_draw_text(fonts[flight.size], flight.color, flight.dx, flight.dy, flight.align, "DL 716");
+	}
+	else
+	{
+		ALLEGRO_TRANSFORM transform;
+		al_identity_transform(&transform);
+		al_scale_transform(&transform, 1.0f, -c);
+		al_translate_transform(&transform, 0.0f, 40 * (1+c));
+		al_use_transform(&transform);
+
+		al_clear_to_color(al_map_rgba(0, 0, 0, 0));
+
+		al_draw_bitmap_region(bitmap, base.sx, base.sy, base.sw, base.sh, base.dx, base.dy, 0);
+		al_draw_bitmap_region(bitmap, barGreen.sx, barGreen.sy, barGreen.sw, barGreen.sh, barGreen.dx, barGreen.dy, 0);
+
+		al_draw_text(fonts[aircraft.size], aircraft.color, aircraft.dx, aircraft.dy, aircraft.align, "Boeing 777-200 LR");
+		al_draw_text(fonts[flight.size], flight.color, flight.dx, flight.dy, flight.align, "DL 716");
+	}
 
 
 

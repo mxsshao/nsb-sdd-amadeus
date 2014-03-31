@@ -68,6 +68,10 @@ private:
 
 	Gwen::Controls::WindowControl* window;
 
+	bool click;
+	float c;
+	void Click();
+
 public:
 	static ATX_flight_display* getInstance() {return &mATX_flight_display;};
 
