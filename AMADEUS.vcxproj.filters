@@ -53,6 +53,9 @@
     <ClInclude Include="ATC_flight_display.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ATX_structs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="version.rc">
