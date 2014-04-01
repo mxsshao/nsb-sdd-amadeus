@@ -46,6 +46,7 @@ ATX::Aircraft::Aircraft(Gwen::Controls::Base* parent, float ex, float ey, float 
 	button = new Gwen::Controls::Button(parent);
 	button->SetSize(508, 66);
 	button->Dock(Gwen::Pos::Top);
+	button->SetShouldDrawBackground(false);
 	button->SetImage(buttonImage);
 	button->SetPadding(Gwen::Padding());
 	button->SetMargin(Gwen::Margin());

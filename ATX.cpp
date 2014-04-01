@@ -15,6 +15,11 @@ void ATX::Main::initialize(int displayW, int displayH, Gwen::Controls::Base* pCa
 
 	camera = Structs::Waypoint(offsetWidth,offsetHeight,0);
 
+	button1 = new Gwen::Controls::Button(canvas);
+	button1->SetBounds(10, 10, 200, 50);
+	//button1->Dock(Gwen::Pos::Top);
+	//button1->SetShouldDrawBackground(false);
+
 	window = new Gwen::Controls::WindowControl(canvas);
 	window->SetTitle(L"Flights");
 	//window->MakeModal(false);

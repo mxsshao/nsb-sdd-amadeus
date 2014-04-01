@@ -20,6 +20,7 @@ namespace ATX
 		bool rClick;
 
 		Gwen::Controls::Base* canvas;
+		Gwen::Controls::Button* button1;
 		Gwen::Controls::WindowControl* window;
 
 		int offsetWidth;
