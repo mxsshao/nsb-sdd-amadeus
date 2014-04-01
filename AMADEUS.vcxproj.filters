@@ -30,6 +30,12 @@
     <ClCompile Include="ATC_flight_display.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ATX_aircraft.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ATX.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="global.h">
@@ -50,10 +56,16 @@
     <ClInclude Include="ATC.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ATX_structs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="ATC_flight_display.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ATX_structs.h">
+    <ClInclude Include="ATX_aircraft.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ATX.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

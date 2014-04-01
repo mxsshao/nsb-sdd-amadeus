@@ -1,5 +1,6 @@
 #include "global.h"
 #include "ctrldisplay.h"
+#include "ATX.h"
 #include "ATC.h"
 #include "ATC_flight_display.h"
 
@@ -75,6 +76,7 @@ int main(int argc, char **argv)
 	canvas->SetDrawBackground(false);
 
 	Gwen::Controls::Base* base = new Gwen::Controls::Base(canvas);
+	base->SetPos(0,0);
 	base->SetSize(al_get_display_width(display), al_get_display_height(display));
 	base->SetCursor(Gwen::CursorType::Normal);
 
@@ -86,8 +88,8 @@ int main(int argc, char **argv)
 	std::cout << "GWEN Init successful" << std::endl;
 
 	//INIT
-	ATC::getInstance()->initialize(al_get_display_width(display), al_get_display_height(display), base);
-	ATC_flight_display::getInstance()->initialize(base);
+	ATX::Main::getInstance()->initialize(al_get_display_width(display), al_get_display_height(display), base);
+	//ATC_flight_display::getInstance()->initialize(base);
 
 	//EVENT INIT
 	event_queue = al_create_event_queue();
@@ -116,16 +118,16 @@ int main(int argc, char **argv)
 		}
 		else
 		{
-			ATC::getInstance()->handleEvents(ev);
-			ATC_flight_display::getInstance()->handleEvents(ev);
+			ATX::Main::getInstance()->handleEvents(ev);
+			//ATC_flight_display::getInstance()->handleEvents(ev);
 		}
 
 		GwenInput.ProcessMessage(ev);
 
 		if (al_is_event_queue_empty(event_queue))
 		{
-			ATC::getInstance()->render();
-			ATC_flight_display::getInstance()->render();
+			ATX::Main::getInstance()->render();
+			//ATC_flight_display::getInstance()->render();
 
 			frames ++;
 			if(al_current_time() - gameTime >= 1)

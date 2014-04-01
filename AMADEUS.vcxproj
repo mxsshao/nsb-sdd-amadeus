@@ -160,6 +160,8 @@
     <ClCompile Include="aircraft.cpp" />
     <ClCompile Include="ATC.cpp" />
     <ClCompile Include="ATC_flight_display.cpp" />
+    <ClCompile Include="ATX.cpp" />
+    <ClCompile Include="ATX_aircraft.cpp" />
     <ClCompile Include="ctrldisplay.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -167,6 +169,8 @@
     <ClInclude Include="aircraft.h" />
     <ClInclude Include="ATC.h" />
     <ClInclude Include="ATC_flight_display.h" />
+    <ClInclude Include="ATX.h" />
+    <ClInclude Include="ATX_aircraft.h" />
     <ClInclude Include="ATX_structs.h" />
     <ClInclude Include="ctrldisplay.h" />
     <ClInclude Include="global.h" />
