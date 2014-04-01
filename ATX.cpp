@@ -16,13 +16,14 @@ void ATX::Main::initialize(int displayW, int displayH, Gwen::Controls::Base* pCa
 	camera = Structs::Waypoint(offsetWidth,offsetHeight,0);
 
 	window = new Gwen::Controls::WindowControl(canvas);
-	window->SetTitle(L"Options");
+	window->SetTitle(L"Flights");
 	//window->MakeModal(false);
 	window->SetClosable(false);
 	//window->DisableResizing();
-	window->SetSize(600, 500);
+	window->SetSize(520, 500);
 	window->SetMinimumSize(Gwen::Point(100,100));
 	window->SetPadding(Gwen::Padding());
+	window->Hide();
 
 	Aircraft::nWaypoints[0] = Structs::Waypoint(100,100,0);
 	Aircraft::nWaypoints[1] = Structs::Waypoint(200,200,0);
@@ -49,10 +50,8 @@ void ATX::Main::initialize(int displayW, int displayH, Gwen::Controls::Base* pCa
 	Aircraft::nFonts[0] = al_load_font("Resources/OpenSans.ttf", 12, 0);
 	Aircraft::nFonts[1] = al_load_font("Resources/OpenSans.ttf", 16, 0);
 
-	nAircraft.push_back(new Aircraft(window, 0, 0.4f, 120.0f, 4));
-	nAircraft.push_back(new Aircraft(window, 0, 0.4f, 120.0f, 3)); 
-	nAircraft.push_back(new Aircraft(window, 0, 0.4f, 120.0f, 2)); 
-	nAircraft.push_back(new Aircraft(window, 0, 0.4f, 120.0f, 1)); 
+	nAircraft.push_back(new Aircraft(window, 1000, 1000, 1000, 3, 0.4f, 10.0f, 2, "MU330"));
+	nAircraft.push_back(new Aircraft(window, 0, 0, 0, 0, 0.4f, 120.0f, 4, "TG380"));
 }
 
 void ATX::Main::handleEvents(ALLEGRO_EVENT &ev)

@@ -5,7 +5,7 @@ ALLEGRO_BITMAP* ATX::Aircraft::aircraftButton;
 ALLEGRO_FONT* ATX::Aircraft::nFonts[2];
 ATX::Structs::Waypoint ATX::Aircraft::nWaypoints[20];
 
-ATX::Aircraft::Aircraft(Gwen::Controls::Base* parent, int start, double eSpeed, double eHeading, int eDestination)
+ATX::Aircraft::Aircraft(Gwen::Controls::Base* parent, float ex, float ey, float ez, int start, double eSpeed, double eHeading, int eDestination, std::string type)
 {
 	tinyxml2::XMLDocument document;
 	document.LoadFile("derp.xml");
@@ -23,7 +23,8 @@ ATX::Aircraft::Aircraft(Gwen::Controls::Base* parent, int start, double eSpeed, 
 
 	document.Clear();
 
-	plane = al_load_bitmap("Resources/aircraft.png");
+	plane = al_load_bitmap(std::string("Resources/").append(type).append(".png").c_str());
+	state = 0;
 
 	speed = eSpeed;
 	currentHeading = eHeading;
@@ -32,9 +33,9 @@ ATX::Aircraft::Aircraft(Gwen::Controls::Base* parent, int start, double eSpeed, 
 
 	previous = start;
 	//nPoints.push_back(nWaypoints[start]);
-	x = nWaypoints[start].x;
-	y = nWaypoints[start].y;
-	z = nWaypoints[start].z;
+	x = ex;
+	y = ey;
+	z = ez;
 
 	std::list<int> destination;
 	destination.push_front(eDestination);
