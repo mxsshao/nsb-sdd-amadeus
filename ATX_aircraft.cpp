@@ -52,6 +52,7 @@ ATX::Aircraft::Aircraft(Gwen::Controls::Base* parent, float ex, float ey, float 
 	button->onPress.Add(this, &ATX::Aircraft::buttonClick);
 
 	offset = 0.0f;
+	done = false;
 }
 
 void ATX::Aircraft::navigate(std::list<int>* destination)
@@ -135,6 +136,10 @@ void ATX::Aircraft::update()
 				nPoints.pop_front();
 			}
 		}
+	}
+	else
+	{
+		done = true;
 	}
 
 	//AIRCRAFT UPDATE

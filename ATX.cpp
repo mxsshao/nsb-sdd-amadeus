@@ -50,7 +50,7 @@ void ATX::Main::initialize(int displayW, int displayH, Gwen::Controls::Base* pCa
 	Aircraft::nFonts[0] = al_load_font("Resources/OpenSans.ttf", 12, 0);
 	Aircraft::nFonts[1] = al_load_font("Resources/OpenSans.ttf", 16, 0);
 
-	nAircraft.push_back(new Aircraft(window, 1000, 1000, 1000, 3, 0.4f, 10.0f, 2, "MU330"));
+	nAircraft.push_back(new Aircraft(window, 1000, 1000, 1000, 3, 0.5f, 10.0f, 2, "MU330"));
 	nAircraft.push_back(new Aircraft(window, 0, 0, 0, 0, 0.4f, 120.0f, 4, "TG380"));
 }
 
@@ -142,9 +142,18 @@ void ATX::Main::handleEvents(ALLEGRO_EVENT &ev)
 void ATX::Main::update()
 {
 	//AIRCRAFT
-	for (iter = nAircraft.begin(); iter != nAircraft.end(); iter++)
+	for (iter = nAircraft.begin(); iter != nAircraft.end();)
 	{
 		(*iter)->update();
+
+		if ((*iter)->done)
+		{
+			nAircraft.erase(iter++);
+		}
+		else
+		{
+			iter++;
+		}
 	}
 
 	//CAMERA

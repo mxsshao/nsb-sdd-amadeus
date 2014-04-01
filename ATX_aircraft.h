@@ -39,6 +39,7 @@ namespace ATX
 		static ALLEGRO_BITMAP* aircraftButton;
 		static ALLEGRO_FONT* nFonts[2];
 		static ATX::Structs::Waypoint nWaypoints[20];
+		bool done;
 
 		void navigate(std::list<int>* destination);
 		void update();
