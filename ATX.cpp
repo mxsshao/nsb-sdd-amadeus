@@ -23,7 +23,7 @@ void ATX::Main::initialize(int displayW, int displayH, Gwen::Controls::Base* pCa
 	window->SetSize(520, 500);
 	window->SetMinimumSize(Gwen::Point(100,100));
 	window->SetPadding(Gwen::Padding());
-	window->Hide();
+	//window->Hide();
 
 	Aircraft::nWaypoints[0] = Structs::Waypoint(100,100,0);
 	Aircraft::nWaypoints[1] = Structs::Waypoint(200,200,0);
@@ -148,6 +148,7 @@ void ATX::Main::update()
 
 		if ((*iter)->done)
 		{
+			delete(*iter);
 			nAircraft.erase(iter++);
 		}
 		else

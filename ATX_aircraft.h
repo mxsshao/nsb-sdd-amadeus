@@ -36,6 +36,7 @@ namespace ATX
 
 	public:
 		Aircraft(Gwen::Controls::Base* parent, float ex, float ey, float ez, int start, double eSpeed, double eHeading, int eDestination, std::string type);
+		~Aircraft();
 		static ALLEGRO_BITMAP* aircraftButton;
 		static ALLEGRO_FONT* nFonts[2];
 		static ATX::Structs::Waypoint nWaypoints[20];

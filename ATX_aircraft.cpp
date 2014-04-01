@@ -111,7 +111,7 @@ void ATX::Aircraft::navigate(std::list<int>* destination)
 
 void ATX::Aircraft::buttonClick()
 {
-
+	std::cout << "Click";
 }
 
 void ATX::Aircraft::update()
@@ -274,4 +274,11 @@ void ATX::Aircraft::renderLines()
 			al_draw_tinted_scaled_rotated_bitmap_region(ATX::Main::getInstance()->bar, offset, 0, calculateHypotenuse((*iter), (*p)), 16, al_map_rgb_f(1,1,1), 0, 8, (*iter).x, (*iter).y, 1.0, 1.0, (calculateHeading((*iter), (*p)) - 90.0f) / 180.0f * ALLEGRO_PI, 0);
 		}
 	}
+}
+
+ATX::Aircraft::~Aircraft()
+{
+	delete(button);
+	al_destroy_bitmap(plane);
+	//al_destroy_bitmap(buttonImage);
 }

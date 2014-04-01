@@ -123,6 +123,7 @@ int main(int argc, char **argv)
 		}
 
 		GwenInput.ProcessMessage(ev);
+		canvas->ProcessDelayedDeletes();
 
 		if (al_is_event_queue_empty(event_queue))
 		{
