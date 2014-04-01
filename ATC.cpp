@@ -1,8 +1,8 @@
-#include "ATX.h"
+#include "ATC.h"
 
-ATX ATX::mATX;
+ATC ATC::mATC;
 
-void ATX::initialize(int displayW, int displayH, Gwen::Controls::Base* pCanvas)
+void ATC::initialize(int displayW, int displayH, Gwen::Controls::Base* pCanvas)
 {
 	canvas = pCanvas;
 
@@ -138,7 +138,7 @@ void ATX::initialize(int displayW, int displayH, Gwen::Controls::Base* pCanvas)
 
 }
 
-void ATX::handleEvents(ALLEGRO_EVENT &ev)
+void ATC::handleEvents(ALLEGRO_EVENT &ev)
 {
 	if (ev.type == ALLEGRO_EVENT_TIMER)
 	{
@@ -223,7 +223,7 @@ void ATX::handleEvents(ALLEGRO_EVENT &ev)
 	}
 }
 
-void ATX::update()
+void ATC::update()
 {
 	offset += 0.8f;
 	if (offset >= 64.0f)
@@ -358,7 +358,7 @@ void ATX::update()
 	al_translate_transform(&transform, offsetWidth - camera.x/(camera.z+1), offsetHeight - camera.y/(camera.z+1));
 }
 
-void ATX::render()
+void ATC::render()
 {
 	ALLEGRO_BITMAP* back = al_get_target_bitmap();
 	al_set_target_bitmap(screen);

@@ -1,7 +1,7 @@
 #include "global.h"
 #include "ctrldisplay.h"
-#include "ATX.h"
-#include "ATX_flight_display.h"
+#include "ATC.h"
+#include "ATC_flight_display.h"
 
 int main(int argc, char **argv)
 {
@@ -86,8 +86,8 @@ int main(int argc, char **argv)
 	std::cout << "GWEN Init successful" << std::endl;
 
 	//INIT
-	ATX::getInstance()->initialize(al_get_display_width(display), al_get_display_height(display), base);
-	ATX_flight_display::getInstance()->initialize(base);
+	ATC::getInstance()->initialize(al_get_display_width(display), al_get_display_height(display), base);
+	ATC_flight_display::getInstance()->initialize(base);
 
 	//EVENT INIT
 	event_queue = al_create_event_queue();
@@ -116,16 +116,16 @@ int main(int argc, char **argv)
 		}
 		else
 		{
-			ATX::getInstance()->handleEvents(ev);
-			ATX_flight_display::getInstance()->handleEvents(ev);
+			ATC::getInstance()->handleEvents(ev);
+			ATC_flight_display::getInstance()->handleEvents(ev);
 		}
 
 		GwenInput.ProcessMessage(ev);
 
 		if (al_is_event_queue_empty(event_queue))
 		{
-			ATX::getInstance()->render();
-			ATX_flight_display::getInstance()->render();
+			ATC::getInstance()->render();
+			ATC_flight_display::getInstance()->render();
 
 			frames ++;
 			if(al_current_time() - gameTime >= 1)

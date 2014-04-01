@@ -64,13 +64,13 @@ struct Aircraft
 
 enum direction {NONE, LEFT, RIGHT};
 
-class ATX : public Gwen::Event::Handler
+class ATC : public Gwen::Event::Handler
 {
 protected:
-	ATX() {};
+	ATC() {};
 
 private:
-	static ATX mATX;
+	static ATC mATC;
 
 	ALLEGRO_BITMAP* screen;
 
@@ -130,7 +130,7 @@ private:
 	};
 
 public:
-	static ATX* getInstance() {return &mATX;};
+	static ATC* getInstance() {return &mATC;};
 
 	void initialize(int displayW, int displayH, Gwen::Controls::Base* pCanvas);
 	void handleEvents(ALLEGRO_EVENT &ev);

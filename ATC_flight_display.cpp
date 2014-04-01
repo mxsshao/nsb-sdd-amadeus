@@ -1,8 +1,8 @@
-#include "ATX_flight_display.h"
+#include "ATC_flight_display.h"
 
-ATX_flight_display ATX_flight_display::mATX_flight_display;
+ATC_flight_display ATC_flight_display::mATC_flight_display;
 
-void ATX_flight_display::initialize(Gwen::Controls::Base* pCanvas)
+void ATC_flight_display::initialize(Gwen::Controls::Base* pCanvas)
 {
 	canvas = pCanvas;
 
@@ -52,7 +52,7 @@ void ATX_flight_display::initialize(Gwen::Controls::Base* pCanvas)
 	button->SetImage(bg);
 	button->SetPadding(Gwen::Padding());
 	button->SetMargin(Gwen::Margin());
-	button->onPress.Add(this, &ATX_flight_display::Click);
+	button->onPress.Add(this, &ATC_flight_display::Click);
 
 	button2 = new Gwen::Controls::Button(window);
 	button2->SetSize(508, 66);
@@ -66,12 +66,12 @@ void ATX_flight_display::initialize(Gwen::Controls::Base* pCanvas)
 	//window->IsHovered();
 }
 
-void ATX_flight_display::Click()
+void ATC_flight_display::Click()
 {
 	click = !click;
 }
 
-void ATX_flight_display::handleEvents(ALLEGRO_EVENT &ev)
+void ATC_flight_display::handleEvents(ALLEGRO_EVENT &ev)
 {
 	if (ev.type==ALLEGRO_EVENT_TIMER)
 	{
@@ -92,7 +92,7 @@ void ATX_flight_display::handleEvents(ALLEGRO_EVENT &ev)
 	}
 }
 
-void ATX_flight_display::render()
+void ATC_flight_display::render()
 {
 
 	ALLEGRO_BITMAP* display = al_get_backbuffer(al_get_current_display());

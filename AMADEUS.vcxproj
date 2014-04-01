@@ -158,15 +158,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="aircraft.cpp" />
-    <ClCompile Include="ATX.cpp" />
-    <ClCompile Include="ATX_flight_display.cpp" />
+    <ClCompile Include="ATC.cpp" />
+    <ClCompile Include="ATC_flight_display.cpp" />
     <ClCompile Include="ctrldisplay.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aircraft.h" />
-    <ClInclude Include="ATX.h" />
-    <ClInclude Include="ATX_flight_display.h" />
+    <ClInclude Include="ATC.h" />
+    <ClInclude Include="ATC_flight_display.h" />
     <ClInclude Include="ctrldisplay.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="resource.h" />

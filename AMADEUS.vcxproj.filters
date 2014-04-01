@@ -24,10 +24,10 @@
     <ClCompile Include="aircraft.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ATX.cpp">
+    <ClCompile Include="ATC.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ATX_flight_display.cpp">
+    <ClCompile Include="ATC_flight_display.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,16 +41,16 @@
     <ClInclude Include="aircraft.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ATX.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="version.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ATX_flight_display.h">
+    <ClInclude Include="ATC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ATC_flight_display.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

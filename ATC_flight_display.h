@@ -45,13 +45,13 @@ struct GuiText
 	};
 };
 
-class ATX_flight_display : public Gwen::Event::Handler
+class ATC_flight_display : public Gwen::Event::Handler
 {
 protected:
-	ATX_flight_display() {};
+	ATC_flight_display() {};
 
 private:
-	static ATX_flight_display mATX_flight_display;
+	static ATC_flight_display mATC_flight_display;
 
 	Gwen::Controls::Base* canvas;
 	Gwen::Controls::Button* button;
@@ -73,7 +73,7 @@ private:
 	void Click();
 
 public:
-	static ATX_flight_display* getInstance() {return &mATX_flight_display;};
+	static ATC_flight_display* getInstance() {return &mATC_flight_display;};
 
 	void initialize(Gwen::Controls::Base* pCanvas);
 	void handleEvents(ALLEGRO_EVENT &ev);
