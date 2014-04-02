@@ -44,7 +44,8 @@ ATX::Aircraft::Aircraft(Gwen::Controls::Base* parent, float ex, float ey, float 
 	buttonImage = al_create_bitmap(508, 66);
 
 	button = new Gwen::Controls::Button(parent);
-	button->SetSize(508, 66);
+	button->SetSize((parent->GetBounds().w - 8), (parent->GetBounds().w - 8) / 508.0f * 66.0f);
+	//button->SetSize(508, 33);
 	button->Dock(Gwen::Pos::Top);
 	button->SetShouldDrawBackground(false);
 	button->SetImage(buttonImage);
@@ -54,6 +55,12 @@ ATX::Aircraft::Aircraft(Gwen::Controls::Base* parent, float ex, float ey, float 
 
 	offset = 0.0f;
 	done = false;
+}
+
+void ATX::Aircraft::resize()
+{
+	button->SetSize((button->GetParent()->GetBounds().w - 8), (button->GetParent()->GetBounds().w - 8) / 508.0f * 66.0f);
+
 }
 
 void ATX::Aircraft::navigate(std::list<int>* destination)
@@ -201,13 +208,13 @@ void ATX::Aircraft::render()
 	al_set_target_bitmap(buttonImage);
 
 	/*if (c >= 0.0f)
-	{
-		ALLEGRO_TRANSFORM transform;
+	{*/
+		/*ALLEGRO_TRANSFORM transform;
 		al_identity_transform(&transform);
-		al_scale_transform(&transform, 1.0f, c);
-		al_translate_transform(&transform, 0.0f, 40 * (1-c));
-		al_use_transform(&transform);
-*/
+		al_scale_transform(&transform, al_get_bitmap_width(buttonImage) / 508.f, al_get_bitmap_height(buttonImage) / 66.0f);
+		//al_translate_transform(&transform, 0.0f, 40 * (1-c));
+		al_use_transform(&transform);*/
+
 		al_clear_to_color(al_map_rgba(0, 0, 0, 0));
 
 		al_draw_bitmap_region(aircraftButton, base.sx, base.sy, base.sw, base.sh, base.dx, base.dy, 0);

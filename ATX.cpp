@@ -25,10 +25,12 @@ void ATX::Main::initialize(int displayW, int displayH, Gwen::Controls::Base* pCa
 	//window->MakeModal(false);
 	window->SetClosable(false);
 	//window->DisableResizing();
-	window->SetSize(520, 500);
+	window->SetSize(400, 300);
+	window->SetPos(displayW - 400, displayH-300);
 	window->SetMinimumSize(Gwen::Point(100,100));
 	window->SetPadding(Gwen::Padding());
 	//window->Hide();
+	window->onResize.Add(this, &ATX::Main::windowResize);
 
 	Aircraft::nWaypoints[0] = Structs::Waypoint(100,100,0);
 	Aircraft::nWaypoints[1] = Structs::Waypoint(200,200,0);
@@ -57,6 +59,14 @@ void ATX::Main::initialize(int displayW, int displayH, Gwen::Controls::Base* pCa
 
 	nAircraft.push_back(new Aircraft(window, 1000, 1000, 1000, 3, 0.5f, 10.0f, 2, "MU330"));
 	nAircraft.push_back(new Aircraft(window, 0, 0, 0, 0, 0.4f, 120.0f, 4, "TG380"));
+}
+
+void ATX::Main::windowResize()
+{
+	for (iter = nAircraft.begin(); iter != nAircraft.end(); iter++)
+	{
+		(*iter)->resize();
+	}
 }
 
 void ATX::Main::handleEvents(ALLEGRO_EVENT &ev)

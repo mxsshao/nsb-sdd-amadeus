@@ -42,6 +42,8 @@ namespace ATX
 		static ATX::Structs::Waypoint nWaypoints[20];
 		bool done;
 
+		void resize();
+
 		void navigate(std::list<int>* destination);
 		void update();
 		void render();
