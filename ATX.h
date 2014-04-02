@@ -42,6 +42,9 @@ namespace ATX
 		ALLEGRO_BITMAP* bar;
 
 		void initialize(int displayW, int displayH, Gwen::Controls::Base* pCanvas);
+
+		void resetSelected();
+
 		void handleEvents(ALLEGRO_EVENT &ev);
 		void render();
 

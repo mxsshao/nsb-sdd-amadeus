@@ -36,6 +36,8 @@ void ATX::Main::initialize(int displayW, int displayH, Gwen::Controls::Base* pCa
 
 	nAircraft.push_back(new Aircraft(window, 1000, 1000, 1000, 3, 0.5f, 10.0f, 2, "MU330"));
 	nAircraft.push_back(new Aircraft(window, 0, 0, 0, 0, 0.4f, 120.0f, 4, "TG380"));
+
+	nAircraft.front()->setSelected(true);
 }
 
 void ATX::Main::windowResize()
@@ -43,6 +45,17 @@ void ATX::Main::windowResize()
 	for (iter = nAircraft.begin(); iter != nAircraft.end(); iter++)
 	{
 		(*iter)->resize();
+	}
+}
+
+void ATX::Main::resetSelected()
+{
+	for (iter = nAircraft.begin(); iter != nAircraft.end(); iter++)
+	{
+		if ((*iter)->getSelected())
+		{
+			(*iter)->setSelected(false);
+		}
 	}
 }
 

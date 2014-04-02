@@ -15,10 +15,13 @@ namespace ATX
 		Gwen::Controls::Button* button;
 		void buttonClick();
 
-		static Structs::GuiImage base;
-		static Structs::GuiImage barGreen;
-		static Structs::GuiText aircraft;
-		static Structs::GuiText flight;
+		static Structs::GuiImage gBase;
+		static Structs::GuiImage gSelectedBase;
+		static Structs::GuiImage gBarGreen;
+		static Structs::GuiImage gAirline;
+		static Structs::GuiText gAircraft;
+		static Structs::GuiText gFlight;
+		static Structs::GuiText gDestination;
 		static ALLEGRO_BITMAP* aircraftButton;
 		static ALLEGRO_FONT* nFonts[2];
 		static ATX::Structs::Waypoint nWaypoints[20];
@@ -35,6 +38,8 @@ namespace ATX
 		int previous;
 
 		bool isSelected;
+		float flipCount;
+
 		float offset;
 
 	public:
@@ -51,6 +56,9 @@ namespace ATX
 		void update();
 		void render();
 		void renderLines();
+
+		bool getSelected() {return isSelected;};
+		void setSelected(bool s) {isSelected = s;};
 
 		static ATX::Structs::Waypoint* getWaypoint(int index) {return &nWaypoints[index];};
 	};

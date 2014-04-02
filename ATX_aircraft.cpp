@@ -1,10 +1,13 @@
 #include "ATX_aircraft.h"
 #include "ATX.h"
 
-ATX::Structs::GuiImage ATX::Aircraft::base;
-ATX::Structs::GuiImage ATX::Aircraft::barGreen;
-ATX::Structs::GuiText ATX::Aircraft::aircraft;
-ATX::Structs::GuiText ATX::Aircraft::flight;
+ATX::Structs::GuiImage ATX::Aircraft::gBase;
+ATX::Structs::GuiImage ATX::Aircraft::gSelectedBase;
+ATX::Structs::GuiImage ATX::Aircraft::gBarGreen;
+ATX::Structs::GuiImage ATX::Aircraft::gAirline;
+ATX::Structs::GuiText ATX::Aircraft::gAircraft;
+ATX::Structs::GuiText ATX::Aircraft::gFlight;
+ATX::Structs::GuiText ATX::Aircraft::gDestination;
 ALLEGRO_BITMAP* ATX::Aircraft::aircraftButton;
 ALLEGRO_FONT* ATX::Aircraft::nFonts[2];
 ATX::Structs::Waypoint ATX::Aircraft::nWaypoints[20];
@@ -18,6 +21,9 @@ ATX::Aircraft::Aircraft(Gwen::Controls::Base* parent, float ex, float ey, float 
 	currentHeading = eHeading;
 	finalHeading = eHeading;
 	direction = NONE;
+
+	isSelected = false;
+	flipCount = 1.0f;
 
 	previous = start;
 	//nPoints.push_back(nWaypoints[start]);
@@ -50,16 +56,25 @@ void ATX::Aircraft::initialize()
 	tinyxml2::XMLDocument document;
 	document.LoadFile("derp.xml");
 	tinyxml2::XMLElement* element = document.FirstChildElement("Base");
-	base = Structs::GuiImage(element->FloatAttribute("sx"), element->FloatAttribute("sy"), element->FloatAttribute("sw"), element->FloatAttribute("sh"), element->FloatAttribute("dx"), element->FloatAttribute("dy"));
+	gBase = Structs::GuiImage(element->FloatAttribute("sx"), element->FloatAttribute("sy"), element->FloatAttribute("sw"), element->FloatAttribute("sh"), element->FloatAttribute("dx"), element->FloatAttribute("dy"));
 	
+	element = document.FirstChildElement("SelectedBase");
+	gSelectedBase = Structs::GuiImage(element->FloatAttribute("sx"), element->FloatAttribute("sy"), element->FloatAttribute("sw"), element->FloatAttribute("sh"), element->FloatAttribute("dx"), element->FloatAttribute("dy"));
+
 	element = document.FirstChildElement("BarGreen");
-	barGreen = Structs::GuiImage(element->FloatAttribute("sx"), element->FloatAttribute("sy"), element->FloatAttribute("sw"), element->FloatAttribute("sh"), element->FloatAttribute("dx"), element->FloatAttribute("dy"));
+	gBarGreen = Structs::GuiImage(element->FloatAttribute("sx"), element->FloatAttribute("sy"), element->FloatAttribute("sw"), element->FloatAttribute("sh"), element->FloatAttribute("dx"), element->FloatAttribute("dy"));
+
+	element = document.FirstChildElement("Airline");
+	gAirline = Structs::GuiImage(element->FloatAttribute("sx"), element->FloatAttribute("sy"), element->FloatAttribute("sw"), element->FloatAttribute("sh"), element->FloatAttribute("dx"), element->FloatAttribute("dy"));
 
 	element = document.FirstChildElement("Aircraft");
-	aircraft = Structs::GuiText(element->FloatAttribute("dx"), element->FloatAttribute("dy"), element->IntAttribute("align"), element->IntAttribute("size"), element->IntAttribute("r"), element->IntAttribute("g"), element->IntAttribute("b"));
+	gAircraft = Structs::GuiText(element->FloatAttribute("dx"), element->FloatAttribute("dy"), element->IntAttribute("align"), element->IntAttribute("size"), element->IntAttribute("r"), element->IntAttribute("g"), element->IntAttribute("b"));
 
 	element = document.FirstChildElement("Flight");
-	flight = Structs::GuiText(element->FloatAttribute("dx"), element->FloatAttribute("dy"), element->IntAttribute("align"), element->IntAttribute("size"), element->IntAttribute("r"), element->IntAttribute("g"), element->IntAttribute("b"));
+	gFlight = Structs::GuiText(element->FloatAttribute("dx"), element->FloatAttribute("dy"), element->IntAttribute("align"), element->IntAttribute("size"), element->IntAttribute("r"), element->IntAttribute("g"), element->IntAttribute("b"));
+
+	element = document.FirstChildElement("Destination");
+	gDestination = Structs::GuiText(element->FloatAttribute("dx"), element->FloatAttribute("dy"), element->IntAttribute("align"), element->IntAttribute("size"), element->IntAttribute("r"), element->IntAttribute("g"), element->IntAttribute("b"));
 
 	document.Clear();
 
@@ -92,7 +107,6 @@ void ATX::Aircraft::initialize()
 void ATX::Aircraft::resize()
 {
 	button->SetSize((button->GetParent()->GetBounds().w - 8), (button->GetParent()->GetBounds().w - 8) / 508.0f * 66.0f);
-
 }
 
 void ATX::Aircraft::navigate(std::list<int>* destination)
@@ -151,17 +165,36 @@ void ATX::Aircraft::navigate(std::list<int>* destination)
 
 void ATX::Aircraft::buttonClick()
 {
-	std::cout << "Click";
+	ATX::Main::getInstance()->resetSelected();
+	isSelected = true;
 }
 
 void ATX::Aircraft::update()
 {
+	//FLIP DISPLAY
+	if (isSelected)
+	{
+		if (flipCount > -1.0f)
+		{
+			flipCount -= 0.1f;
+		}
+	}
+	else
+	{
+		if (flipCount < 1.0f)
+		{
+			flipCount += 0.1f;
+		}
+	}
+
+	//BAR
 	offset += 0.8f;
 	if (offset >= 64.0f)
 	{
 		offset = 0.0f;
 	}
 
+	//CHECK POINTS
 	if (!nPoints.empty())
 	{
 		finalHeading = calculateHeading(Structs::Waypoint(x,y,z), nPoints.front());
@@ -239,38 +272,33 @@ void ATX::Aircraft::render()
 
 	al_set_target_bitmap(buttonImage);
 
-	/*if (c >= 0.0f)
-	{*/
-		/*ALLEGRO_TRANSFORM transform;
-		al_identity_transform(&transform);
-		al_scale_transform(&transform, al_get_bitmap_width(buttonImage) / 508.f, al_get_bitmap_height(buttonImage) / 66.0f);
-		//al_translate_transform(&transform, 0.0f, 40 * (1-c));
-		al_use_transform(&transform);*/
-
-		al_clear_to_color(al_map_rgba(0, 0, 0, 0));
-
-		al_draw_bitmap_region(aircraftButton, base.sx, base.sy, base.sw, base.sh, base.dx, base.dy, 0);
-		al_draw_bitmap_region(aircraftButton, barGreen.sx, barGreen.sy, barGreen.sw, barGreen.sh, barGreen.dx, barGreen.dy, 0);
-
-		al_draw_text(nFonts[aircraft.size], aircraft.color, aircraft.dx, aircraft.dy, aircraft.align, "Boeing 777-200 LR");
-		al_draw_text(nFonts[flight.size], flight.color, flight.dx, flight.dy, flight.align, "DL 716");
-	/*}
-	else
+	if (flipCount >= 0.0f)
 	{
-		ALLEGRO_TRANSFORM transform;
 		al_identity_transform(&transform);
-		al_scale_transform(&transform, 1.0f, -c);
-		al_translate_transform(&transform, 0.0f, 40 * (1+c));
+		al_scale_transform(&transform, 1.0f, flipCount);
+		al_translate_transform(&transform, 0.0f, 40 * (1-flipCount));
 		al_use_transform(&transform);
 
 		al_clear_to_color(al_map_rgba(0, 0, 0, 0));
 
-		al_draw_bitmap_region(bitmap, base.sx, base.sy, base.sw, base.sh, base.dx, base.dy, 0);
-		al_draw_bitmap_region(bitmap, barGreen.sx, barGreen.sy, barGreen.sw, barGreen.sh, barGreen.dx, barGreen.dy, 0);
+		al_draw_bitmap_region(aircraftButton, gBase.sx, gBase.sy, gBase.sw, gBase.sh, gBase.dx, gBase.dy, 0);
+		al_draw_bitmap_region(aircraftButton, gBarGreen.sx, gBarGreen.sy, gBarGreen.sw, gBarGreen.sh, gBarGreen.dx, gBarGreen.dy, 0);
 
-		al_draw_text(fonts[aircraft.size], aircraft.color, aircraft.dx, aircraft.dy, aircraft.align, "Boeing 777-200 LR");
-		al_draw_text(fonts[flight.size], flight.color, flight.dx, flight.dy, flight.align, "DL 716");
-	}*/
+		al_draw_text(nFonts[gAircraft.size], gAircraft.color, gAircraft.dx, gAircraft.dy, gAircraft.align, "Boeing 777-200 LR");
+		al_draw_text(nFonts[gFlight.size], gFlight.color, gFlight.dx, gFlight.dy, gFlight.align, "DL 716");
+	}
+	else
+	{
+		ALLEGRO_TRANSFORM transform;
+		al_identity_transform(&transform);
+		al_scale_transform(&transform, 1.0f, -flipCount);
+		al_translate_transform(&transform, 0.0f, 40 * (1+flipCount));
+		al_use_transform(&transform);
+
+		al_clear_to_color(al_map_rgba(0, 0, 0, 0));
+
+		al_draw_bitmap_region(aircraftButton, gSelectedBase.sx, gSelectedBase.sy, gSelectedBase.sw, gSelectedBase.sh, gSelectedBase.dx, gSelectedBase.dy, 0);
+	}
 
 
 
@@ -299,19 +327,40 @@ void ATX::Aircraft::render()
 
 void ATX::Aircraft::renderLines()
 {
-	std::list<Structs::Waypoint>::iterator iter;
-	for (iter = nPoints.begin(); iter != nPoints.end(); iter++)
+	if (isSelected)
 	{
-		if (iter == nPoints.begin())
+		std::list<Structs::Waypoint>::iterator iter;
+		for (iter = nPoints.begin(); iter != nPoints.end(); iter++)
 		{
-			//al_draw_line((*iter).x, (*iter).y, test.location.x, test.location.y, al_map_rgb_f(1,1,1), 2);
-			al_draw_tinted_scaled_rotated_bitmap_region(ATX::Main::getInstance()->bar, offset, 0, calculateHypotenuse((*iter), Structs::Waypoint(x,y,z)), 16, al_map_rgb_f(1,1,1), 0, 8, (*iter).x, (*iter).y, 1.0, 1.0, (calculateHeading((*iter), Structs::Waypoint(x,y,z)) - 90.0f) / 180.0f * ALLEGRO_PI, 0);
+			if (iter == nPoints.begin())
+			{
+				//al_draw_line((*iter).x, (*iter).y, test.location.x, test.location.y, al_map_rgb_f(1,1,1), 2);
+				al_draw_tinted_scaled_rotated_bitmap_region(ATX::Main::getInstance()->bar, offset, 0, calculateHypotenuse((*iter), Structs::Waypoint(x,y,z)), 16, al_map_rgb_f(1,1,1), 0, 8, (*iter).x, (*iter).y, 1.0, 1.0, (calculateHeading((*iter), Structs::Waypoint(x,y,z)) - 90.0f) / 180.0f * ALLEGRO_PI, 0);
+			}
+			else
+			{
+				std::list<Structs::Waypoint>::iterator p = std::prev(iter);
+				//al_draw_line((*iter).x, (*iter).y, (*p).x, (*p).y, al_map_rgb_f(1,1,1), 10);
+				al_draw_tinted_scaled_rotated_bitmap_region(ATX::Main::getInstance()->bar, offset, 0, calculateHypotenuse((*iter), (*p)), 16, al_map_rgb_f(1,1,1), 0, 8, (*iter).x, (*iter).y, 1.0, 1.0, (calculateHeading((*iter), (*p)) - 90.0f) / 180.0f * ALLEGRO_PI, 0);
+			}
 		}
-		else
+	}
+	else
+	{
+		std::list<Structs::Waypoint>::iterator iter;
+		for (iter = nPoints.begin(); iter != nPoints.end(); iter++)
 		{
-			std::list<Structs::Waypoint>::iterator p = std::prev(iter);
-			//al_draw_line((*iter).x, (*iter).y, (*p).x, (*p).y, al_map_rgb_f(1,1,1), 10);
-			al_draw_tinted_scaled_rotated_bitmap_region(ATX::Main::getInstance()->bar, offset, 0, calculateHypotenuse((*iter), (*p)), 16, al_map_rgb_f(1,1,1), 0, 8, (*iter).x, (*iter).y, 1.0, 1.0, (calculateHeading((*iter), (*p)) - 90.0f) / 180.0f * ALLEGRO_PI, 0);
+			if (iter == nPoints.begin())
+			{
+				//al_draw_line((*iter).x, (*iter).y, test.location.x, test.location.y, al_map_rgb_f(1,1,1), 2);
+				al_draw_tinted_scaled_rotated_bitmap_region(ATX::Main::getInstance()->bar, offset, 48, calculateHypotenuse((*iter), Structs::Waypoint(x,y,z)), 16, al_map_rgb_f(1,1,1), 0, 8, (*iter).x, (*iter).y, 1.0, 1.0, (calculateHeading((*iter), Structs::Waypoint(x,y,z)) - 90.0f) / 180.0f * ALLEGRO_PI, 0);
+			}
+			else
+			{
+				std::list<Structs::Waypoint>::iterator p = std::prev(iter);
+				//al_draw_line((*iter).x, (*iter).y, (*p).x, (*p).y, al_map_rgb_f(1,1,1), 10);
+				al_draw_tinted_scaled_rotated_bitmap_region(ATX::Main::getInstance()->bar, offset, 48, calculateHypotenuse((*iter), (*p)), 16, al_map_rgb_f(1,1,1), 0, 8, (*iter).x, (*iter).y, 1.0, 1.0, (calculateHeading((*iter), (*p)) - 90.0f) / 180.0f * ALLEGRO_PI, 0);
+			}
 		}
 	}
 }
