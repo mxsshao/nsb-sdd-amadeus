@@ -15,7 +15,7 @@ ATX::Structs::Waypoint ATX::Aircraft::nWaypoints[20];
 ATX::Aircraft::Aircraft(Gwen::Controls::Base* parent, float ex, float ey, float ez, int start, double eSpeed, double eHeading, int eDestination, std::string type)
 {
 	plane = al_load_bitmap(std::string("Resources/").append(type).append(".png").c_str());
-	state = 0;
+	state = 15.0f;
 
 	speed = eSpeed;
 	currentHeading = eHeading;
@@ -45,7 +45,7 @@ ATX::Aircraft::Aircraft(Gwen::Controls::Base* parent, float ex, float ey, float 
 	button->SetImage(buttonImage);
 	button->SetPadding(Gwen::Padding());
 	button->SetMargin(Gwen::Margin());
-	button->onPress.Add(this, &ATX::Aircraft::buttonClick);
+	button->onPress.Add(this, &ATX::Aircraft::select);
 
 	offset = 0.0f;
 	done = false;
@@ -166,6 +166,8 @@ void ATX::Aircraft::navigate(std::list<int>* destination)
 void ATX::Aircraft::buttonClick()
 {
 	ATX::Main::getInstance()->resetSelected();
+	ATX::Main::getInstance()->getCamera()->following = this;
+	ATX::Main::getInstance()->getCamera()->z = z;
 	isSelected = true;
 }
 

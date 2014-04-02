@@ -13,7 +13,7 @@ void ATX::Main::initialize(int displayW, int displayH, Gwen::Controls::Base* pCa
 	bar = al_load_bitmap("Resources/bar.png");
 	bg = al_load_bitmap("Resources/bg.png");
 
-	camera = Structs::Waypoint(offsetWidth,offsetHeight,0);
+	camera = Structs::Camera(offsetWidth,offsetHeight,0);
 
 	button1 = new Gwen::Controls::Button(canvas);
 	button1->SetBounds(10, 10, 200, 50);
@@ -34,10 +34,11 @@ void ATX::Main::initialize(int displayW, int displayH, Gwen::Controls::Base* pCa
 
 	Aircraft::initialize();
 
-	nAircraft.push_back(new Aircraft(window, 1000, 1000, 1000, 3, 0.5f, 10.0f, 2, "MU330"));
+	nAircraft.push_back(new Aircraft(window, 1000, 1000, 0, 3, 0.5f, 90.0f, 2, "MU330"));
 	nAircraft.push_back(new Aircraft(window, 0, 0, 0, 0, 0.4f, 120.0f, 4, "TG380"));
 
 	nAircraft.front()->setSelected(true);
+	camera.following = nAircraft.front();
 }
 
 void ATX::Main::windowResize()
@@ -56,6 +57,17 @@ void ATX::Main::resetSelected()
 		{
 			(*iter)->setSelected(false);
 		}
+	}
+	camera.following = NULL;
+}
+
+void ATX::Main::breakaway()
+{
+	if (camera.following)
+	{
+		camera.x = camera.following->getX();
+		camera.y = camera.following->getY();
+		camera.following = NULL;
 	}
 }
 
@@ -140,6 +152,7 @@ void ATX::Main::handleEvents(ALLEGRO_EVENT &ev)
 		{
 			camera.x -= ev.mouse.dx*(camera.z+1);
 			camera.y -= ev.mouse.dy*(camera.z+1);
+			breakaway();
 		}
 	}
 }
@@ -153,6 +166,7 @@ void ATX::Main::update()
 
 		if ((*iter)->done)
 		{
+			breakaway();
 			delete(*iter);
 			nAircraft.erase(iter++);
 		}
@@ -171,10 +185,12 @@ void ATX::Main::update()
 		else if (keys[RIGHT])
 		{
 			camera.x += 30.0f*(camera.z+1);
+			breakaway();
 		}
 		else if (keys[LEFT])
 		{
 			camera.x -= 30.0f*(camera.z+1);
+			breakaway();
 		}
 
 		if ((keys[UP] && keys[DOWN]) || (!keys[UP] && !keys[DOWN]))
@@ -183,10 +199,12 @@ void ATX::Main::update()
 		else if (keys[UP])
 		{
 			camera.y -= 30.0f*(camera.z+1);
+			breakaway();
 		}
 		else if (keys[DOWN])
 		{
 			camera.y += 30.0f*(camera.z+1);
+			breakaway();
 		}
 	}
 	else
@@ -197,10 +215,12 @@ void ATX::Main::update()
 		else if (keys[RIGHT])
 		{
 			camera.x += 10.0f*(camera.z+1);
+			breakaway();
 		}
 		else if (keys[LEFT])
 		{
 			camera.x -= 10.0f*(camera.z+1);
+			breakaway();
 		}
 
 		if ((keys[UP] && keys[DOWN]) || (!keys[UP] && !keys[DOWN]))
@@ -209,16 +229,27 @@ void ATX::Main::update()
 		else if (keys[UP])
 		{
 			camera.y -= 10.0f*(camera.z+1);
+			breakaway();
 		}
 		else if (keys[DOWN])
 		{
 			camera.y += 10.0f*(camera.z+1);
+			breakaway();
 		}
 	}
 
-	al_identity_transform(&transform);
-	al_scale_transform(&transform, 1.0f/(camera.z+1), 1.0f/(camera.z+1));
-	al_translate_transform(&transform, offsetWidth - camera.x/(camera.z+1), offsetHeight - camera.y/(camera.z+1));
+	if (camera.following)
+	{
+		al_identity_transform(&transform);
+		al_scale_transform(&transform, 1.0f/(camera.z+1), 1.0f/(camera.z+1));
+		al_translate_transform(&transform, offsetWidth - camera.following->getX()/(camera.z+1), offsetHeight - camera.following->getY()/(camera.z+1));
+	}
+	else
+	{
+		al_identity_transform(&transform);
+		al_scale_transform(&transform, 1.0f/(camera.z+1), 1.0f/(camera.z+1));
+		al_translate_transform(&transform, offsetWidth - camera.x/(camera.z+1), offsetHeight - camera.y/(camera.z+1));
+	}
 }
 
 void ATX::Main::render()

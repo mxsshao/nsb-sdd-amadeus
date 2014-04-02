@@ -13,7 +13,6 @@ namespace ATX
 		int state;
 
 		Gwen::Controls::Button* button;
-		void buttonClick();
 
 		static Structs::GuiImage gBase;
 		static Structs::GuiImage gSelectedBase;
@@ -56,7 +55,11 @@ namespace ATX
 		void update();
 		void render();
 		void renderLines();
+		void select();
 
+		float getX() {return x;};
+		float getY() {return y;};
+		float getZ() {return z;};
 		bool getSelected() {return isSelected;};
 		void setSelected(bool s) {isSelected = s;};
 

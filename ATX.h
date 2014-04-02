@@ -28,13 +28,14 @@ namespace ATX
 		int offsetHeight;
 
 		ALLEGRO_TRANSFORM transform;
-		Structs::Waypoint camera;
+		Structs::Camera camera;
 
 		std::list<Aircraft*> nAircraft;
 		std::list<Aircraft*>::iterator iter;
 		ALLEGRO_BITMAP* bg;
 
 		void update();
+		void breakaway();
 
 	public:
 		static Main* getInstance() {return &mMain;};
@@ -48,6 +49,7 @@ namespace ATX
 		void handleEvents(ALLEGRO_EVENT &ev);
 		void render();
 
+		Structs::Camera* getCamera() {return &camera;};
 		void setDisplayOffset(int displayW, int displayH) {offsetWidth = displayW/2; offsetHeight = displayH/2;};
 
 	};

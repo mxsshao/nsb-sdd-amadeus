@@ -3,6 +3,7 @@
 
 namespace ATX
 {
+class Aircraft;
 namespace Structs
 {
 	struct Waypoint
@@ -15,6 +16,15 @@ namespace Structs
 		float y;
 		float z;
 		std::list<int> nConnected;
+	};
+	struct Camera
+	{
+		Camera() {};
+		Camera(float ex, float ey, float ez) {x = ex; y = ey; z = ez; following = NULL;};
+		float x;
+		float y;
+		float z;
+		Aircraft* following;
 	};
 	struct GuiImage
 	{
