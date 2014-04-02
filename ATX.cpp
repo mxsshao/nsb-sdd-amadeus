@@ -32,30 +32,7 @@ void ATX::Main::initialize(int displayW, int displayH, Gwen::Controls::Base* pCa
 	//window->Hide();
 	window->onResize.Add(this, &ATX::Main::windowResize);
 
-	Aircraft::nWaypoints[0] = Structs::Waypoint(100,100,0);
-	Aircraft::nWaypoints[1] = Structs::Waypoint(200,200,0);
-	Aircraft::nWaypoints[2] = Structs::Waypoint(300,300,0);
-	Aircraft::nWaypoints[3] = Structs::Waypoint(1000,600,0);
-	Aircraft::nWaypoints[4] = Structs::Waypoint(1000,300,0);
-
-	Aircraft::nWaypoints[0].nConnected.push_back(1);
-	//Aircraft::nWaypoints[0].nConnected.push_back(4);
-	Aircraft::nWaypoints[1].nConnected.push_back(0);
-	//Aircraft::nWaypoints[1].nConnected.push_back(4);
-	Aircraft::nWaypoints[1].nConnected.push_back(2);
-	Aircraft::nWaypoints[2].nConnected.push_back(1);
-	Aircraft::nWaypoints[2].nConnected.push_back(3);
-	Aircraft::nWaypoints[2].nConnected.push_back(4);
-	Aircraft::nWaypoints[3].nConnected.push_back(2);
-	Aircraft::nWaypoints[3].nConnected.push_back(4);
-	//Aircraft::nWaypoints[4].nConnected.push_back(0);
-	//Aircraft::nWaypoints[4].nConnected.push_back(1);
-	Aircraft::nWaypoints[4].nConnected.push_back(2);
-	Aircraft::nWaypoints[4].nConnected.push_back(3);
-
-	Aircraft::aircraftButton = al_load_bitmap("Resources/FIDS.png");
-	Aircraft::nFonts[0] = al_load_font("Resources/OpenSans.ttf", 12, 0);
-	Aircraft::nFonts[1] = al_load_font("Resources/OpenSans.ttf", 16, 0);
+	Aircraft::initialize();
 
 	nAircraft.push_back(new Aircraft(window, 1000, 1000, 1000, 3, 0.5f, 10.0f, 2, "MU330"));
 	nAircraft.push_back(new Aircraft(window, 0, 0, 0, 0, 0.4f, 120.0f, 4, "TG380"));
@@ -265,7 +242,7 @@ void ATX::Main::render()
 	int i;
 	for (i = 0; i != 5; i++)
 	{
-		al_draw_tinted_scaled_rotated_bitmap_region(bar, 0, 320, 64, 64, al_map_rgb_f(1,1,1), 32, 32, Aircraft::nWaypoints[i].x,  Aircraft::nWaypoints[i].y, 1.0f, 1.0f, 0, 0);
+		al_draw_tinted_scaled_rotated_bitmap_region(bar, 0, 320, 64, 64, al_map_rgb_f(1,1,1), 32, 32, Aircraft::getWaypoint(i)->x,  Aircraft::getWaypoint(i)->y, camera.z+1, camera.z+1, 0, 0);
 		//al_draw_circle(temp[i].location.x, temp[i].location.y, 6, al_map_rgb_f(1,1,1), 12);
 	}
 

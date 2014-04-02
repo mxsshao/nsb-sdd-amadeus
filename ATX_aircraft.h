@@ -15,10 +15,13 @@ namespace ATX
 		Gwen::Controls::Button* button;
 		void buttonClick();
 
-		Structs::GuiImage base;
-		Structs::GuiImage barGreen;
-		Structs::GuiText aircraft;
-		Structs::GuiText flight;
+		static Structs::GuiImage base;
+		static Structs::GuiImage barGreen;
+		static Structs::GuiText aircraft;
+		static Structs::GuiText flight;
+		static ALLEGRO_BITMAP* aircraftButton;
+		static ALLEGRO_FONT* nFonts[2];
+		static ATX::Structs::Waypoint nWaypoints[20];
 
 		double speed;
 		double currentHeading;
@@ -37,9 +40,9 @@ namespace ATX
 	public:
 		Aircraft(Gwen::Controls::Base* parent, float ex, float ey, float ez, int start, double eSpeed, double eHeading, int eDestination, std::string type);
 		~Aircraft();
-		static ALLEGRO_BITMAP* aircraftButton;
-		static ALLEGRO_FONT* nFonts[2];
-		static ATX::Structs::Waypoint nWaypoints[20];
+
+		static void initialize();
+
 		bool done;
 
 		void resize();
@@ -48,5 +51,7 @@ namespace ATX
 		void update();
 		void render();
 		void renderLines();
+
+		static ATX::Structs::Waypoint* getWaypoint(int index) {return &nWaypoints[index];};
 	};
 };

@@ -1,28 +1,16 @@
 #include "ATX_aircraft.h"
 #include "ATX.h"
 
+ATX::Structs::GuiImage ATX::Aircraft::base;
+ATX::Structs::GuiImage ATX::Aircraft::barGreen;
+ATX::Structs::GuiText ATX::Aircraft::aircraft;
+ATX::Structs::GuiText ATX::Aircraft::flight;
 ALLEGRO_BITMAP* ATX::Aircraft::aircraftButton;
 ALLEGRO_FONT* ATX::Aircraft::nFonts[2];
 ATX::Structs::Waypoint ATX::Aircraft::nWaypoints[20];
 
 ATX::Aircraft::Aircraft(Gwen::Controls::Base* parent, float ex, float ey, float ez, int start, double eSpeed, double eHeading, int eDestination, std::string type)
 {
-	tinyxml2::XMLDocument document;
-	document.LoadFile("derp.xml");
-	tinyxml2::XMLElement* element = document.FirstChildElement("Base");
-	base = Structs::GuiImage(element->FloatAttribute("sx"), element->FloatAttribute("sy"), element->FloatAttribute("sw"), element->FloatAttribute("sh"), element->FloatAttribute("dx"), element->FloatAttribute("dy"));
-	
-	element = document.FirstChildElement("BarGreen");
-	barGreen = Structs::GuiImage(element->FloatAttribute("sx"), element->FloatAttribute("sy"), element->FloatAttribute("sw"), element->FloatAttribute("sh"), element->FloatAttribute("dx"), element->FloatAttribute("dy"));
-
-	element = document.FirstChildElement("Aircraft");
-	aircraft = Structs::GuiText(element->FloatAttribute("dx"), element->FloatAttribute("dy"), element->IntAttribute("align"), element->IntAttribute("size"), element->IntAttribute("r"), element->IntAttribute("g"), element->IntAttribute("b"));
-
-	element = document.FirstChildElement("Flight");
-	flight = Structs::GuiText(element->FloatAttribute("dx"), element->FloatAttribute("dy"), element->IntAttribute("align"), element->IntAttribute("size"), element->IntAttribute("r"), element->IntAttribute("g"), element->IntAttribute("b"));
-
-	document.Clear();
-
 	plane = al_load_bitmap(std::string("Resources/").append(type).append(".png").c_str());
 	state = 0;
 
@@ -55,6 +43,50 @@ ATX::Aircraft::Aircraft(Gwen::Controls::Base* parent, float ex, float ey, float 
 
 	offset = 0.0f;
 	done = false;
+}
+
+void ATX::Aircraft::initialize()
+{
+	tinyxml2::XMLDocument document;
+	document.LoadFile("derp.xml");
+	tinyxml2::XMLElement* element = document.FirstChildElement("Base");
+	base = Structs::GuiImage(element->FloatAttribute("sx"), element->FloatAttribute("sy"), element->FloatAttribute("sw"), element->FloatAttribute("sh"), element->FloatAttribute("dx"), element->FloatAttribute("dy"));
+	
+	element = document.FirstChildElement("BarGreen");
+	barGreen = Structs::GuiImage(element->FloatAttribute("sx"), element->FloatAttribute("sy"), element->FloatAttribute("sw"), element->FloatAttribute("sh"), element->FloatAttribute("dx"), element->FloatAttribute("dy"));
+
+	element = document.FirstChildElement("Aircraft");
+	aircraft = Structs::GuiText(element->FloatAttribute("dx"), element->FloatAttribute("dy"), element->IntAttribute("align"), element->IntAttribute("size"), element->IntAttribute("r"), element->IntAttribute("g"), element->IntAttribute("b"));
+
+	element = document.FirstChildElement("Flight");
+	flight = Structs::GuiText(element->FloatAttribute("dx"), element->FloatAttribute("dy"), element->IntAttribute("align"), element->IntAttribute("size"), element->IntAttribute("r"), element->IntAttribute("g"), element->IntAttribute("b"));
+
+	document.Clear();
+
+	nWaypoints[0] = Structs::Waypoint(100,100,0);
+	nWaypoints[1] = Structs::Waypoint(200,200,0);
+	nWaypoints[2] = Structs::Waypoint(300,300,0);
+	nWaypoints[3] = Structs::Waypoint(1000,600,0);
+	nWaypoints[4] = Structs::Waypoint(1000,300,0);
+
+	nWaypoints[0].nConnected.push_back(1);
+	//nWaypoints[0].nConnected.push_back(4);
+	nWaypoints[1].nConnected.push_back(0);
+	//nWaypoints[1].nConnected.push_back(4);
+	nWaypoints[1].nConnected.push_back(2);
+	nWaypoints[2].nConnected.push_back(1);
+	nWaypoints[2].nConnected.push_back(3);
+	nWaypoints[2].nConnected.push_back(4);
+	nWaypoints[3].nConnected.push_back(2);
+	nWaypoints[3].nConnected.push_back(4);
+	//nWaypoints[4].nConnected.push_back(0);
+	//nWaypoints[4].nConnected.push_back(1);
+	nWaypoints[4].nConnected.push_back(2);
+	nWaypoints[4].nConnected.push_back(3);
+
+	aircraftButton = al_load_bitmap("Resources/FIDS.png");
+	nFonts[0] = al_load_font("Resources/OpenSans.ttf", 12, 0);
+	nFonts[1] = al_load_font("Resources/OpenSans.ttf", 16, 0);
 }
 
 void ATX::Aircraft::resize()
