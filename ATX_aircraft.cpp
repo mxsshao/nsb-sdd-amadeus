@@ -35,10 +35,10 @@ ATX::Aircraft::Aircraft(Gwen::Controls::Base* parent, float ex, float ey, float 
 	destination.push_front(eDestination);
 	navigate(&destination);
 
-	buttonImage = al_create_bitmap(508, 66);
+	buttonImage = al_create_bitmap(gBase.sw, gBase.sh);
 
 	button = new Gwen::Controls::Button(parent);
-	button->SetSize((parent->GetBounds().w - 8), (parent->GetBounds().w - 8) / 508.0f * 66.0f);
+	button->SetSize((parent->GetBounds().w), (parent->GetBounds().w) / gBase.sw * gBase.sh);
 	//button->SetSize(508, 33);
 	button->Dock(Gwen::Pos::Top);
 	button->SetShouldDrawBackground(false);
@@ -106,7 +106,7 @@ void ATX::Aircraft::initialize()
 
 void ATX::Aircraft::resize()
 {
-	button->SetSize((button->GetParent()->GetBounds().w - 8), (button->GetParent()->GetBounds().w - 8) / 508.0f * 66.0f);
+	button->SetSize((button->GetParent()->GetBounds().w), (button->GetParent()->GetBounds().w) / gBase.sw * gBase.sh);
 }
 
 void ATX::Aircraft::navigate(std::list<int>* destination)
@@ -274,6 +274,8 @@ void ATX::Aircraft::render()
 
 	al_set_target_bitmap(buttonImage);
 
+	al_hold_bitmap_drawing(true);
+
 	if (flipCount >= 0.0f)
 	{
 		al_identity_transform(&transform);
@@ -302,7 +304,7 @@ void ATX::Aircraft::render()
 		al_draw_bitmap_region(aircraftButton, gSelectedBase.sx, gSelectedBase.sy, gSelectedBase.sw, gSelectedBase.sh, gSelectedBase.dx, gSelectedBase.dy, 0);
 	}
 
-
+	al_hold_bitmap_drawing(false);
 
 	al_set_target_bitmap(back);
 
@@ -329,6 +331,8 @@ void ATX::Aircraft::render()
 
 void ATX::Aircraft::renderLines()
 {
+	al_hold_bitmap_drawing(true);
+
 	if (isSelected)
 	{
 		std::list<Structs::Waypoint>::iterator iter;
@@ -365,6 +369,8 @@ void ATX::Aircraft::renderLines()
 			}
 		}
 	}
+
+	al_hold_bitmap_drawing(false);
 }
 
 ATX::Aircraft::~Aircraft()

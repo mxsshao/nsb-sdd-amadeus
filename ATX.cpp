@@ -15,11 +15,6 @@ void ATX::Main::initialize(int displayW, int displayH, Gwen::Controls::Base* pCa
 
 	camera = Structs::Camera(offsetWidth,offsetHeight,0);
 
-	button1 = new Gwen::Controls::Button(canvas);
-	button1->SetBounds(10, 10, 200, 50);
-	//button1->Dock(Gwen::Pos::Top);
-	//button1->SetShouldDrawBackground(false);
-
 	window = new Gwen::Controls::WindowControl(canvas);
 	window->SetTitle(L"Flights");
 	//window->MakeModal(false);
@@ -33,13 +28,27 @@ void ATX::Main::initialize(int displayW, int displayH, Gwen::Controls::Base* pCa
 	window->onResize.Add(this, &ATX::Main::windowResize);
 
 	testControl = new Gwen::Controls::WindowControl(canvas);
-	testControl->SetTitle(L"Flights");
+	testControl->SetTitle(L"Test Control");
 	//window->MakeModal(false);
 	testControl->SetClosable(false);
 	//window->DisableResizing();
-	testControl->SetSize(400, 300);
+	testControl->SetSize(200, 200);
 	testControl->SetPos(0, displayH-300);
 	testControl->DisableResizing();
+
+	button1 = new Gwen::Controls::Button(testControl);
+	button1->SetText("Display Symbols");
+	button1->SetIsToggle(true);
+	//button1->SetToggleState(true);
+	//button1->SetBounds(10, 10, 200, 50);
+	button1->SetSize(200, 50);
+	button1->Dock(Gwen::Pos::Top);
+	//button1->SetShouldDrawBackground(false);
+
+	button2 = new Gwen::Controls::Button(testControl);
+	button2->SetText("Button 2");
+	button2->SetSize(200, 50);
+	button2->Dock(Gwen::Pos::Top);
 
 
 
@@ -48,8 +57,7 @@ void ATX::Main::initialize(int displayW, int displayH, Gwen::Controls::Base* pCa
 	nAircraft.push_back(new Aircraft(window, 1000, 1000, 0, 3, 0.5f, 90.0f, 2, "MU330"));
 	nAircraft.push_back(new Aircraft(window, 0, 0, 0, 0, 0.4f, 120.0f, 4, "TG380"));
 
-	nAircraft.front()->setSelected(true);
-	camera.following = nAircraft.front();
+	nAircraft.front()->select();
 }
 
 void ATX::Main::windowResize()
@@ -180,6 +188,10 @@ void ATX::Main::update()
 			breakaway();
 			delete(*iter);
 			nAircraft.erase(iter++);
+			if (!nAircraft.empty())
+			{
+				(*iter)->select();
+			}
 		}
 		else
 		{
@@ -273,18 +285,21 @@ void ATX::Main::render()
 
 	al_draw_bitmap(bg,0,0,0);
 
-	al_hold_bitmap_drawing(true);
+	//MAP SYMBOLS
+	if (button1->GetToggleState())
+	{
+		al_hold_bitmap_drawing(true);
 	
-	al_draw_tinted_scaled_rotated_bitmap_region(bar, 128, 64, 128, 128, al_map_rgb_f(1,1,1), 64, 128, 400, 200, 1.0f, 1.0f, 0, 0);
-	al_draw_tinted_scaled_rotated_bitmap_region(bar, 256, 64, 128, 128, al_map_rgb_f(1,1,1), 64, 128, 500, 200, 1.0f, 1.0f, 0, 0);
-	al_draw_tinted_scaled_rotated_bitmap_region(bar, 128, 192, 128, 128, al_map_rgb_f(1,1,1), 64, 128, 400, 328, 1.0f, 1.0f, 0, 0);
-	al_draw_tinted_scaled_rotated_bitmap_region(bar, 256, 192, 128, 128, al_map_rgb_f(1,1,1), 64, 128, 500, 328, 1.0f, 1.0f, 0, 0);
+		al_draw_tinted_scaled_rotated_bitmap_region(bar, 128, 64, 128, 128, al_map_rgb_f(1,1,1), 64, 128, 400, 200, 1.0f, 1.0f, 0, 0);
+		al_draw_tinted_scaled_rotated_bitmap_region(bar, 256, 64, 128, 128, al_map_rgb_f(1,1,1), 64, 128, 500, 200, 1.0f, 1.0f, 0, 0);
+		al_draw_tinted_scaled_rotated_bitmap_region(bar, 128, 192, 128, 128, al_map_rgb_f(1,1,1), 64, 128, 400, 328, 1.0f, 1.0f, 0, 0);
+		al_draw_tinted_scaled_rotated_bitmap_region(bar, 256, 192, 128, 128, al_map_rgb_f(1,1,1), 64, 128, 500, 328, 1.0f, 1.0f, 0, 0);
 
-	al_draw_tinted_scaled_rotated_bitmap_region(bar, 0, 832, 128, 192, al_map_rgb_f(1,1,1), 64, 96, 1000, 328, 1.0f, 1.0f, 0, 0);
-	al_draw_tinted_scaled_rotated_bitmap_region(bar, 384, 384, 640, 640, al_map_rgb_f(1,1,1), 320, 320, 1000, 328, 1.0f, 1.0f, 0, 0);
+		al_draw_tinted_scaled_rotated_bitmap_region(bar, 0, 832, 128, 192, al_map_rgb_f(1,1,1), 64, 96, 1000, 328, 1.0f, 1.0f, 0, 0);
+		al_draw_tinted_scaled_rotated_bitmap_region(bar, 384, 384, 640, 640, al_map_rgb_f(1,1,1), 320, 320, 1000, 328, 1.0f, 1.0f, 0, 0);
 
-	al_hold_bitmap_drawing(false);
-
+		al_hold_bitmap_drawing(false);
+	}
 
 	//AIRCRAFT
 	for (iter = nAircraft.begin(); iter != nAircraft.end(); iter++)
@@ -297,7 +312,8 @@ void ATX::Main::render()
 	int i;
 	for (i = 0; i != 5; i++)
 	{
-		al_draw_tinted_scaled_rotated_bitmap_region(bar, 0, 320, 64, 64, al_map_rgb_f(1,1,1), 32, 32, Aircraft::getWaypoint(i)->x,  Aircraft::getWaypoint(i)->y, camera.z+1, camera.z+1, 0, 0);
+		//al_draw_tinted_scaled_rotated_bitmap_region(bar, 0, 320, 64, 64, al_map_rgb_f(1,1,1), 32, 32, Aircraft::getWaypoint(i)->x,  Aircraft::getWaypoint(i)->y, camera.z+1, camera.z+1, 0, 0);
+		al_draw_tinted_scaled_rotated_bitmap_region(bar, 0, 320, 64, 64, al_map_rgb_f(1,1,1), 32, 32, Aircraft::getWaypoint(i)->x,  Aircraft::getWaypoint(i)->y, 1.0f, 1.0f, 0, 0);
 		//al_draw_circle(temp[i].location.x, temp[i].location.y, 6, al_map_rgb_f(1,1,1), 12);
 	}
 

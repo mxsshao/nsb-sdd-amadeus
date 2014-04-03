@@ -83,7 +83,7 @@ int main(int argc, char **argv)
 	Gwen::Input::Allegro GwenInput;
 	GwenInput.Initialize(canvas);
 
-	al_grab_mouse(display);
+	//al_grab_mouse(display);
 
 	std::cout << "GWEN Init successful" << std::endl;
 
