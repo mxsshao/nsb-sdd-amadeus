@@ -25,6 +25,8 @@ namespace ATX
 		Gwen::Controls::Button* button1;
 		Gwen::Controls::Button* button2;
 		void windowResize();
+		Gwen::Controls::WindowControl* radarWindow;
+		void radarWindowResize();
 
 		int offsetWidth;
 		int offsetHeight;

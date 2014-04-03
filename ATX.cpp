@@ -140,7 +140,7 @@ void ATX::Main::handleEvents(ALLEGRO_EVENT &ev)
 	}
 	else if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
 	{
-		if (ev.mouse.button == 2)
+		if (ev.mouse.button == 2 && ((ev.mouse.x < window->GetBounds().x || ev.mouse.x > window->GetBounds().x + window->GetBounds().w) || (ev.mouse.y < window->GetBounds().y || ev.mouse.y > window->GetBounds().y + window->GetBounds().h)))
 		{
 			rClick = true;
 			//al_set_system_mouse_cursor(al_get_current_display(), ALLEGRO_SYSTEM_MOUSE_CURSOR_MOVE);
@@ -167,7 +167,7 @@ void ATX::Main::handleEvents(ALLEGRO_EVENT &ev)
 				camera.z = 0;
 			}
 		}
-		if (rClick)
+		if (rClick && ((ev.mouse.x < window->GetBounds().x || ev.mouse.x > window->GetBounds().x + window->GetBounds().w) || (ev.mouse.y < window->GetBounds().y || ev.mouse.y > window->GetBounds().y + window->GetBounds().h)))
 		{
 			camera.x -= ev.mouse.dx*(camera.z+1);
 			camera.y -= ev.mouse.dy*(camera.z+1);
