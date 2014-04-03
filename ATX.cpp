@@ -32,6 +32,17 @@ void ATX::Main::initialize(int displayW, int displayH, Gwen::Controls::Base* pCa
 	//window->Hide();
 	window->onResize.Add(this, &ATX::Main::windowResize);
 
+	testControl = new Gwen::Controls::WindowControl(canvas);
+	testControl->SetTitle(L"Flights");
+	//window->MakeModal(false);
+	testControl->SetClosable(false);
+	//window->DisableResizing();
+	testControl->SetSize(400, 300);
+	testControl->SetPos(0, displayH-300);
+	testControl->DisableResizing();
+
+
+
 	Aircraft::initialize();
 
 	nAircraft.push_back(new Aircraft(window, 1000, 1000, 0, 3, 0.5f, 90.0f, 2, "MU330"));

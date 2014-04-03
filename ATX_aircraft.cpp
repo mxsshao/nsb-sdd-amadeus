@@ -163,7 +163,7 @@ void ATX::Aircraft::navigate(std::list<int>* destination)
 
 }
 
-void ATX::Aircraft::buttonClick()
+void ATX::Aircraft::select()
 {
 	ATX::Main::getInstance()->resetSelected();
 	ATX::Main::getInstance()->getCamera()->following = this;

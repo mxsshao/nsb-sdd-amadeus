@@ -22,6 +22,7 @@ namespace ATX
 		Gwen::Controls::Base* canvas;
 		Gwen::Controls::Button* button1;
 		Gwen::Controls::WindowControl* window;
+		Gwen::Controls::WindowControl* testControl;
 		void windowResize();
 
 		int offsetWidth;
