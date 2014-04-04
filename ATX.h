@@ -25,7 +25,11 @@ namespace ATX
 		Gwen::Controls::Button* button1;
 		Gwen::Controls::Button* button2;
 		void windowResize();
+
 		Gwen::Controls::WindowControl* radarWindow;
+		Gwen::Controls::ImagePanel* radarPanel;
+		ALLEGRO_BITMAP* radarImage;
+		ALLEGRO_BITMAP* radarRender;
 		void radarWindowResize();
 
 		int offsetWidth;

@@ -23,8 +23,6 @@ void ATX::Main::initialize(int displayW, int displayH, Gwen::Controls::Base* pCa
 	window->SetSize(400, 300);
 	window->SetPos(displayW - 400, displayH-300);
 	window->SetMinimumSize(Gwen::Point(100,100));
-	window->SetPadding(Gwen::Padding());
-	//window->Hide();
 	window->onResize.Add(this, &ATX::Main::windowResize);
 
 	testControl = new Gwen::Controls::WindowControl(canvas);
@@ -50,7 +48,19 @@ void ATX::Main::initialize(int displayW, int displayH, Gwen::Controls::Base* pCa
 	button2->SetSize(200, 50);
 	button2->Dock(Gwen::Pos::Top);
 
+	radarWindow = new Gwen::Controls::WindowControl(canvas);
+	radarWindow->SetTitle(L"Radar");
+	radarWindow->SetClosable(false);
+	radarWindow->SetSize(256, 256 + 28);
+	radarWindow->SetPos(0,0);
 
+	radarImage = al_load_bitmap("Resources/radar.png");
+	radarRender = al_create_bitmap(256,256);
+
+	radarPanel = new Gwen::Controls::ImagePanel(radarWindow);
+	radarPanel->Dock(Gwen::Pos::Top);
+	radarPanel->SetSize(radarWindow->GetBounds().w - 8, radarWindow->GetBounds().w - 8);
+	radarPanel->SetImage(radarRender);
 
 	Aircraft::initialize();
 
@@ -140,7 +150,7 @@ void ATX::Main::handleEvents(ALLEGRO_EVENT &ev)
 	}
 	else if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
 	{
-		if (ev.mouse.button == 2 && ((ev.mouse.x < window->GetBounds().x || ev.mouse.x > window->GetBounds().x + window->GetBounds().w) || (ev.mouse.y < window->GetBounds().y || ev.mouse.y > window->GetBounds().y + window->GetBounds().h)))
+		if (ev.mouse.button == 2 && canvas->IsHovered())
 		{
 			rClick = true;
 			//al_set_system_mouse_cursor(al_get_current_display(), ALLEGRO_SYSTEM_MOUSE_CURSOR_MOVE);
@@ -167,7 +177,7 @@ void ATX::Main::handleEvents(ALLEGRO_EVENT &ev)
 				camera.z = 0;
 			}
 		}
-		if (rClick && ((ev.mouse.x < window->GetBounds().x || ev.mouse.x > window->GetBounds().x + window->GetBounds().w) || (ev.mouse.y < window->GetBounds().y || ev.mouse.y > window->GetBounds().y + window->GetBounds().h)))
+		if (rClick && canvas->IsHovered())
 		{
 			camera.x -= ev.mouse.dx*(camera.z+1);
 			camera.y -= ev.mouse.dy*(camera.z+1);
@@ -324,6 +334,18 @@ void ATX::Main::render()
 	{
 		(*iter)->render();
 	}
+
+	//RADAR
+	al_set_target_bitmap(radarRender);
+	al_hold_bitmap_drawing(true);
+	al_clear_to_color(al_map_rgba(0,0,0,0));
+	al_draw_bitmap_region(radarImage, 0, 0, 256, 256, 0, 0, 0);
+	for (iter = nAircraft.begin(); iter != nAircraft.end(); iter++)
+	{
+		al_draw_filled_circle((*iter)->getX() / 10.0f, (*iter)->getY() / 10.0f, 2, al_map_rgb(0,255,0));
+	}
+	al_draw_bitmap_region(radarImage, 256, 0, 256, 256, 0, 0, 0);
+	al_hold_bitmap_drawing(false);
 
 	al_set_target_bitmap(back);
 	al_draw_bitmap(screen, 0, 0, 0);
