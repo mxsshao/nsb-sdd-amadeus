@@ -12,7 +12,7 @@ ALLEGRO_BITMAP* ATX::Aircraft::aircraftButton;
 ALLEGRO_FONT* ATX::Aircraft::nFonts[2];
 ATX::Structs::Waypoint ATX::Aircraft::nWaypoints[20];
 
-ATX::Aircraft::Aircraft(Gwen::Controls::Base* parent, float ex, float ey, float ez, int start, double eSpeed, double eHeading, int eDestination, std::string type)
+ATX::Aircraft::Aircraft(Gwen::Controls::WindowControl* parent, float ex, float ey, float ez, int start, double eSpeed, double eHeading, int eDestination, std::string type)
 {
 	plane = al_load_bitmap(std::string("Resources/").append(type).append(".png").c_str());
 	state = 15.0f;
@@ -38,7 +38,7 @@ ATX::Aircraft::Aircraft(Gwen::Controls::Base* parent, float ex, float ey, float 
 	buttonImage = al_create_bitmap(gBase.sw, gBase.sh);
 
 	button = new Gwen::Controls::Button(parent);
-	button->SetSize((parent->GetBounds().w - 8), (parent->GetBounds().w - 8) / gBase.sw * gBase.sh);
+	button->SetSize(button->GetActualParent()->GetBounds().w, button->GetActualParent()->GetBounds().w / gBase.sw * gBase.sh);
 	//button->SetSize(508, 33);
 	button->Dock(Gwen::Pos::Top);
 	button->SetShouldDrawBackground(false);
@@ -106,7 +106,7 @@ void ATX::Aircraft::initialize()
 
 void ATX::Aircraft::resize()
 {
-	button->SetSize((button->GetParent()->GetBounds().w - 8), (button->GetParent()->GetBounds().w - 8) / gBase.sw * gBase.sh);
+	button->SetSize(button->GetActualParent()->GetBounds().w, button->GetActualParent()->GetBounds().w / gBase.sw * gBase.sh);
 }
 
 void ATX::Aircraft::navigate(std::list<int>* destination)
@@ -331,8 +331,6 @@ void ATX::Aircraft::render()
 
 void ATX::Aircraft::renderLines()
 {
-	al_hold_bitmap_drawing(true);
-
 	if (isSelected)
 	{
 		std::list<Structs::Waypoint>::iterator iter;
@@ -369,8 +367,6 @@ void ATX::Aircraft::renderLines()
 			}
 		}
 	}
-
-	al_hold_bitmap_drawing(false);
 }
 
 ATX::Aircraft::~Aircraft()

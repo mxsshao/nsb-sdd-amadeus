@@ -42,7 +42,7 @@ namespace ATX
 		float offset;
 
 	public:
-		Aircraft(Gwen::Controls::Base* parent, float ex, float ey, float ez, int start, double eSpeed, double eHeading, int eDestination, std::string type);
+		Aircraft(Gwen::Controls::WindowControl* parent, float ex, float ey, float ez, int start, double eSpeed, double eHeading, int eDestination, std::string type);
 		~Aircraft();
 
 		static void initialize();

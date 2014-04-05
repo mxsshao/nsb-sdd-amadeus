@@ -21,10 +21,15 @@ namespace ATX
 
 		Gwen::Controls::Base* canvas;
 		Gwen::Controls::WindowControl* window;
+		void windowResize();
 		Gwen::Controls::WindowControl* testControl;
 		Gwen::Controls::Button* button1;
+		void button1Click() {nAircraft.push_back(new Aircraft(window, 1000, 1000, 0, 3, 0.5f, 90.0f, 2, "MU330"));nAircraft.back()->select();};
 		Gwen::Controls::Button* button2;
-		void windowResize();
+		Gwen::Controls::Button* button3;
+		void button3Click() {window->Show();};
+		Gwen::Controls::Button* button4;
+		void button4Click() {radarPanel->Show();};
 
 		Gwen::Controls::WindowControl* radarWindow;
 		Gwen::Controls::ImagePanel* radarPanel;

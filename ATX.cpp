@@ -16,13 +16,16 @@ void ATX::Main::initialize(int displayW, int displayH, Gwen::Controls::Base* pCa
 	camera = Structs::Camera(offsetWidth,offsetHeight,0);
 
 	window = new Gwen::Controls::WindowControl(canvas);
-	window->SetTitle(L"Flights");
+	window->MakeScroll();
+	window->GetScroll()->SetScroll(false, true);
+	window->GetScroll()->onResize.Add(this, &ATX::Main::windowResize);
+	window->SetTitle(L"Flight Information");
 	//window->MakeModal(false);
-	window->SetClosable(false);
+	//window->SetClosable(false);
 	//window->DisableResizing();
 	window->SetSize(400, 300);
 	window->SetPos(displayW - 400, displayH-300);
-	window->SetMinimumSize(Gwen::Point(100,100));
+	window->SetMinimumSize(Gwen::Point(200,200));
 	window->onResize.Add(this, &ATX::Main::windowResize);
 
 	testControl = new Gwen::Controls::WindowControl(canvas);
@@ -35,24 +38,32 @@ void ATX::Main::initialize(int displayW, int displayH, Gwen::Controls::Base* pCa
 	testControl->DisableResizing();
 
 	button1 = new Gwen::Controls::Button(testControl);
-	button1->SetText("Display Symbols");
-	button1->SetIsToggle(true);
-	//button1->SetToggleState(true);
-	//button1->SetBounds(10, 10, 200, 50);
-	button1->SetSize(200, 50);
+	button1->SetText(L"Add Flight");
+	button1->SetSize(200, 30);
 	button1->Dock(Gwen::Pos::Top);
-	//button1->SetShouldDrawBackground(false);
+	button1->onPress.Add(this, &ATX::Main::button1Click);
 
 	button2 = new Gwen::Controls::Button(testControl);
-	button2->SetText("Button 2");
-	button2->SetSize(200, 50);
+	button2->SetText(L"Display Symbols");
+	button2->SetIsToggle(true);
+	//button2->SetToggleState(true);
+	//button2->SetBounds(20, 20, 200, 50);
+	button2->SetSize(200, 30);
 	button2->Dock(Gwen::Pos::Top);
+	//button2->SetShouldDrawBackground(false);
+
+	button3 = new Gwen::Controls::Button(testControl);
+	button3->SetText(L"Button 3");
+	button3->SetSize(300, 30);
+	button3->Dock(Gwen::Pos::Top);
+	button3->onPress.Add(this, &ATX::Main::button3Click);
 
 	radarWindow = new Gwen::Controls::WindowControl(canvas);
 	radarWindow->SetTitle(L"Radar");
-	radarWindow->SetClosable(false);
+	//radarWindow->SetClosable(false);
 	radarWindow->SetSize(256, 256 + 28);
 	radarWindow->SetPos(0,0);
+	radarWindow->DisableResizing();
 
 	radarImage = al_load_bitmap("Resources/radar.png");
 	radarRender = al_create_bitmap(256,256);
@@ -296,7 +307,7 @@ void ATX::Main::render()
 	al_draw_bitmap(bg,0,0,0);
 
 	//MAP SYMBOLS
-	if (button1->GetToggleState())
+	if (button2->GetToggleState())
 	{
 		al_hold_bitmap_drawing(true);
 	
@@ -311,14 +322,15 @@ void ATX::Main::render()
 		al_hold_bitmap_drawing(false);
 	}
 
+	al_hold_bitmap_drawing(true);
 	//AIRCRAFT
 	for (iter = nAircraft.begin(); iter != nAircraft.end(); iter++)
 	{
 		(*iter)->renderLines();
 	}
+	al_hold_bitmap_drawing(false);
 
 	al_hold_bitmap_drawing(true);
-
 	int i;
 	for (i = 0; i != 5; i++)
 	{
@@ -326,7 +338,6 @@ void ATX::Main::render()
 		al_draw_tinted_scaled_rotated_bitmap_region(bar, 0, 320, 64, 64, al_map_rgb_f(1,1,1), 32, 32, Aircraft::getWaypoint(i)->x,  Aircraft::getWaypoint(i)->y, 1.0f, 1.0f, 0, 0);
 		//al_draw_circle(temp[i].location.x, temp[i].location.y, 6, al_map_rgb_f(1,1,1), 12);
 	}
-
 	al_hold_bitmap_drawing(false);
 
 	//AIRCRAFT
@@ -342,7 +353,14 @@ void ATX::Main::render()
 	al_draw_bitmap_region(radarImage, 0, 0, 256, 256, 0, 0, 0);
 	for (iter = nAircraft.begin(); iter != nAircraft.end(); iter++)
 	{
-		al_draw_filled_circle((*iter)->getX() / 10.0f, (*iter)->getY() / 10.0f, 2, al_map_rgb(0,255,0));
+		if ((*iter)->getSelected())
+		{
+			al_draw_tinted_scaled_rotated_bitmap_region(radarImage, 4, 256, 4, 4, al_map_rgb_f(1,1,1), 2, 2, (*iter)->getX() / 10.0f,  (*iter)->getY() / 10.0f, 1.0f, 1.0f, 0, 0);
+		}
+		else
+		{
+			al_draw_tinted_scaled_rotated_bitmap_region(radarImage, 0, 256, 4, 4, al_map_rgb_f(1,1,1), 2, 2, (*iter)->getX() / 10.0f,  (*iter)->getY() / 10.0f, 1.0f, 1.0f, 0, 0);
+		}
 	}
 	al_draw_bitmap_region(radarImage, 256, 0, 256, 256, 0, 0, 0);
 	al_hold_bitmap_drawing(false);
