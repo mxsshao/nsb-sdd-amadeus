@@ -33,7 +33,7 @@ void ATX::Main::initialize(int displayW, int displayH, Gwen::Controls::Base* pCa
 	//window->MakeModal(false);
 	testControl->SetClosable(false);
 	//window->DisableResizing();
-	testControl->SetSize(200, 200);
+	testControl->SetSize(200, 300);
 	testControl->SetPos(0, displayH-300);
 	testControl->DisableResizing();
 
@@ -53,10 +53,16 @@ void ATX::Main::initialize(int displayW, int displayH, Gwen::Controls::Base* pCa
 	//button2->SetShouldDrawBackground(false);
 
 	button3 = new Gwen::Controls::Button(testControl);
-	button3->SetText(L"Button 3");
+	button3->SetText(L"Show Flight Window");
 	button3->SetSize(300, 30);
 	button3->Dock(Gwen::Pos::Top);
 	button3->onPress.Add(this, &ATX::Main::button3Click);
+
+	button4 = new Gwen::Controls::Button(testControl);
+	button4->SetText(L"Show Radar Window");
+	button4->SetSize(300, 30);
+	button4->Dock(Gwen::Pos::Top);
+	button4->onPress.Add(this, &ATX::Main::button4Click);
 
 	radarWindow = new Gwen::Controls::WindowControl(canvas);
 	radarWindow->SetTitle(L"Radar");
@@ -83,19 +89,25 @@ void ATX::Main::initialize(int displayW, int displayH, Gwen::Controls::Base* pCa
 
 void ATX::Main::windowResize()
 {
-	for (iter = nAircraft.begin(); iter != nAircraft.end(); iter++)
+	if (!nAircraft.empty())
 	{
-		(*iter)->resize();
+		for (iter = nAircraft.begin(); iter != nAircraft.end(); iter++)
+		{
+			(*iter)->resize();
+		}
 	}
 }
 
 void ATX::Main::resetSelected()
 {
-	for (iter = nAircraft.begin(); iter != nAircraft.end(); iter++)
+	if (!nAircraft.empty())
 	{
-		if ((*iter)->getSelected())
+		for (iter = nAircraft.begin(); iter != nAircraft.end(); iter++)
 		{
-			(*iter)->setSelected(false);
+			if ((*iter)->getSelected())
+			{
+				(*iter)->setSelected(false);
+			}
 		}
 	}
 	camera.following = NULL;
@@ -179,7 +191,7 @@ void ATX::Main::handleEvents(ALLEGRO_EVENT &ev)
 	}
 	else if (ev.type == ALLEGRO_EVENT_MOUSE_AXES)
 	{
-		if (ev.mouse.dz != 0)
+		if (ev.mouse.dz != 0 && canvas->IsHovered())
 		{
 			camera.z -= ev.mouse.dz / 3.0f;
 
@@ -200,23 +212,27 @@ void ATX::Main::handleEvents(ALLEGRO_EVENT &ev)
 void ATX::Main::update()
 {
 	//AIRCRAFT
-	for (iter = nAircraft.begin(); iter != nAircraft.end();)
+	if (!nAircraft.empty())
 	{
-		(*iter)->update();
+		for (iter = nAircraft.begin(); iter != nAircraft.end();)
+		{
+			(*iter)->update();
 
-		if ((*iter)->done)
-		{
-			breakaway();
-			delete(*iter);
-			nAircraft.erase(iter++);
-			if (!nAircraft.empty())
+			if ((*iter)->done)
 			{
-				(*iter)->select();
+				bool shouldSelect = (*iter)->getSelected();
+				breakaway();
+				delete(*iter);
+				nAircraft.erase(iter++);
+				if (!nAircraft.empty() && shouldSelect)
+				{
+					(*iter)->select();
+				}
 			}
-		}
-		else
-		{
-			iter++;
+			else
+			{
+				iter++;
+			}
 		}
 	}
 
@@ -324,11 +340,14 @@ void ATX::Main::render()
 
 	al_hold_bitmap_drawing(true);
 	//AIRCRAFT
-	for (iter = nAircraft.begin(); iter != nAircraft.end(); iter++)
+	if (!nAircraft.empty())
 	{
-		(*iter)->renderLines();
+		for (iter = nAircraft.begin(); iter != nAircraft.end(); iter++)
+		{
+			(*iter)->renderLines();
+		}
+		al_hold_bitmap_drawing(false);
 	}
-	al_hold_bitmap_drawing(false);
 
 	al_hold_bitmap_drawing(true);
 	int i;
@@ -341,9 +360,12 @@ void ATX::Main::render()
 	al_hold_bitmap_drawing(false);
 
 	//AIRCRAFT
-	for (iter = nAircraft.begin(); iter != nAircraft.end(); iter++)
+	if (!nAircraft.empty())
 	{
-		(*iter)->render();
+		for (iter = nAircraft.begin(); iter != nAircraft.end(); iter++)
+		{
+			(*iter)->render();
+		}
 	}
 
 	//RADAR
@@ -351,17 +373,22 @@ void ATX::Main::render()
 	al_hold_bitmap_drawing(true);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 	al_draw_bitmap_region(radarImage, 0, 0, 256, 256, 0, 0, 0);
-	for (iter = nAircraft.begin(); iter != nAircraft.end(); iter++)
+
+	if (!nAircraft.empty())
 	{
-		if ((*iter)->getSelected())
+		for (iter = nAircraft.begin(); iter != nAircraft.end(); iter++)
 		{
-			al_draw_tinted_scaled_rotated_bitmap_region(radarImage, 4, 256, 4, 4, al_map_rgb_f(1,1,1), 2, 2, (*iter)->getX() / 10.0f,  (*iter)->getY() / 10.0f, 1.0f, 1.0f, 0, 0);
-		}
-		else
-		{
-			al_draw_tinted_scaled_rotated_bitmap_region(radarImage, 0, 256, 4, 4, al_map_rgb_f(1,1,1), 2, 2, (*iter)->getX() / 10.0f,  (*iter)->getY() / 10.0f, 1.0f, 1.0f, 0, 0);
+			if ((*iter)->getSelected())
+			{
+				al_draw_tinted_scaled_rotated_bitmap_region(radarImage, 4, 256, 4, 4, al_map_rgb_f(1,1,1), 2, 2, (*iter)->getX() / 10.0f,  (*iter)->getY() / 10.0f, 1.0f, 1.0f, 0, 0);
+			}
+			else
+			{
+				al_draw_tinted_scaled_rotated_bitmap_region(radarImage, 0, 256, 4, 4, al_map_rgb_f(1,1,1), 2, 2, (*iter)->getX() / 10.0f,  (*iter)->getY() / 10.0f, 1.0f, 1.0f, 0, 0);
+			}
 		}
 	}
+
 	al_draw_bitmap_region(radarImage, 256, 0, 256, 256, 0, 0, 0);
 	al_hold_bitmap_drawing(false);
 

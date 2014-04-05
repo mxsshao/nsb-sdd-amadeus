@@ -38,7 +38,7 @@ ATX::Aircraft::Aircraft(Gwen::Controls::WindowControl* parent, float ex, float e
 	buttonImage = al_create_bitmap(gBase.sw, gBase.sh);
 
 	button = new Gwen::Controls::Button(parent);
-	button->SetSize(button->GetActualParent()->GetBounds().w, button->GetActualParent()->GetBounds().w / gBase.sw * gBase.sh);
+	//button->SetSize(button->GetActualParent()->GetBounds().w, button->GetActualParent()->GetBounds().w / gBase.sw * gBase.sh);
 	//button->SetSize(508, 33);
 	button->Dock(Gwen::Pos::Top);
 	button->SetShouldDrawBackground(false);
@@ -54,8 +54,18 @@ ATX::Aircraft::Aircraft(Gwen::Controls::WindowControl* parent, float ex, float e
 void ATX::Aircraft::initialize()
 {
 	tinyxml2::XMLDocument document;
-	document.LoadFile("derp.xml");
-	tinyxml2::XMLElement* element = document.FirstChildElement("Base");
+	document.LoadFile("derp2.xml");
+
+	tinyxml2::XMLElement* element = document.FirstChildElement("Source");
+
+	aircraftButton = al_load_bitmap(std::string("Resources/").append(element->Attribute("src")).c_str());
+
+	element = document.FirstChildElement("Font0");
+	nFonts[0] = al_load_font(std::string("Resources/").append(element->Attribute("src")).c_str(), element->IntAttribute("point"), 0);
+	element = document.FirstChildElement("Font1");
+	nFonts[1] = al_load_font(std::string("Resources/").append(element->Attribute("src")).c_str(), element->IntAttribute("point"), 0);
+
+	element = document.FirstChildElement("Base");
 	gBase = Structs::GuiImage(element->FloatAttribute("sx"), element->FloatAttribute("sy"), element->FloatAttribute("sw"), element->FloatAttribute("sh"), element->FloatAttribute("dx"), element->FloatAttribute("dy"));
 	
 	element = document.FirstChildElement("SelectedBase");
@@ -98,10 +108,6 @@ void ATX::Aircraft::initialize()
 	//nWaypoints[4].nConnected.push_back(1);
 	nWaypoints[4].nConnected.push_back(2);
 	nWaypoints[4].nConnected.push_back(3);
-
-	aircraftButton = al_load_bitmap("Resources/FIDS.png");
-	nFonts[0] = al_load_font("Resources/OpenSans.ttf", 12, 0);
-	nFonts[1] = al_load_font("Resources/OpenSans.ttf", 16, 0);
 }
 
 void ATX::Aircraft::resize()
