@@ -36,6 +36,9 @@
     <ClCompile Include="ATX.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="states_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="global.h">
@@ -66,6 +69,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ATX.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="states_base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="states_manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

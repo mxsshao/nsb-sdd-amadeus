@@ -2,10 +2,11 @@
 #include "global.h"
 #include "ATX_structs.h"
 #include "ATX_aircraft.h"
+#include "states_manager.h"
 
 namespace ATX
 {
-	class Main : public Gwen::Event::Handler
+	class Main : public States::Base
 	{
 	protected:
 		Main() {};
@@ -55,12 +56,18 @@ namespace ATX
 
 		ALLEGRO_BITMAP* bar;
 
-		void initialize(int displayW, int displayH, Gwen::Controls::Base* pCanvas);
+		void load() {};
+		void initialize(States::Manager* manager);
 
 		void resetSelected();
 
+		void pause() {};
+		void resume() {};
+
 		void handleEvents(ALLEGRO_EVENT &ev);
 		void render();
+
+		void cleanup() {};
 
 		Structs::Camera* getCamera() {return &camera;};
 		void setDisplayOffset(int displayW, int displayH) {offsetWidth = displayW/2; offsetHeight = displayH/2;};

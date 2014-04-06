@@ -3,6 +3,7 @@
 #include "ATX.h"
 #include "ATC.h"
 #include "ATC_flight_display.h"
+#include "states_manager.h"
 
 int main(int argc, char **argv)
 {
@@ -87,10 +88,6 @@ int main(int argc, char **argv)
 
 	std::cout << "GWEN Init successful" << std::endl;
 
-	//INIT
-	ATX::Main::getInstance()->initialize(al_get_display_width(display), al_get_display_height(display), base);
-	//ATC_flight_display::getInstance()->initialize(base);
-
 	//EVENT INIT
 	event_queue = al_create_event_queue();
 	timer = al_create_timer(1.0 / 60);
@@ -103,6 +100,12 @@ int main(int argc, char **argv)
 	al_register_event_source(event_queue, al_get_mouse_event_source());
 
 	al_start_timer(timer);
+
+	//INIT
+	States::Manager::getInstance()->initialize(display, event_queue, base);
+	States::Manager::getInstance()->changeState(ATX::Main::getInstance());
+	//ATX::Main::getInstance()->initialize(al_get_display_width(display), al_get_display_height(display), base);
+	//ATC_flight_display::getInstance()->initialize(base);
 
 	std::cout << "Loading Done" << std::endl;
 

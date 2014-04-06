@@ -2,9 +2,12 @@
 
 ATX::Main ATX::Main::mMain;
 
-void ATX::Main::initialize(int displayW, int displayH, Gwen::Controls::Base* pCanvas)
+void ATX::Main::initialize(States::Manager* manager)
 {
-	canvas = pCanvas;
+	canvas = manager->getCanvas();
+
+	int displayW = al_get_display_width(manager->getDisplay());
+	int displayH = al_get_display_height(manager->getDisplay());
 
 	screen = al_create_bitmap(displayW, displayH);
 

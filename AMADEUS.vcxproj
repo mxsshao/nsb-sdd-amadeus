@@ -164,6 +164,7 @@
     <ClCompile Include="ATX_aircraft.cpp" />
     <ClCompile Include="ctrldisplay.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="states_manager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aircraft.h" />
@@ -175,6 +176,8 @@
     <ClInclude Include="ctrldisplay.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="states_base.h" />
+    <ClInclude Include="states_manager.h" />
     <ClInclude Include="version.h" />
   </ItemGroup>
   <ItemGroup>
