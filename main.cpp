@@ -141,7 +141,7 @@ int main(int argc, char **argv)
 				frames = 0;
 			}
 
-			al_draw_textf(font, al_map_rgb(255, 255, 0), 5, 5, 0, "FPS: %i", gameFPS);
+			al_draw_textf(font, al_map_rgb(255, 255, 0), 10, 680, 0, "FPS: %i", gameFPS);
 
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0, 0, 0));

@@ -56,7 +56,7 @@ namespace ATX
 
 		ALLEGRO_BITMAP* bar;
 
-		void load() {};
+		void load(States::Manager* manager) {};
 		void initialize(States::Manager* manager);
 
 		void resetSelected();

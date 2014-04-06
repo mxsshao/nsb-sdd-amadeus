@@ -162,6 +162,7 @@
     <ClCompile Include="ATC_flight_display.cpp" />
     <ClCompile Include="ATX.cpp" />
     <ClCompile Include="ATX_aircraft.cpp" />
+    <ClCompile Include="ATX_menu.cpp" />
     <ClCompile Include="ctrldisplay.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="states_manager.cpp" />
@@ -172,6 +173,7 @@
     <ClInclude Include="ATC_flight_display.h" />
     <ClInclude Include="ATX.h" />
     <ClInclude Include="ATX_aircraft.h" />
+    <ClInclude Include="ATX_menu.h" />
     <ClInclude Include="ATX_structs.h" />
     <ClInclude Include="ctrldisplay.h" />
     <ClInclude Include="global.h" />

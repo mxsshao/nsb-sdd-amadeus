@@ -11,7 +11,7 @@ namespace States
 		Base() {};
 
 	public:
-		virtual void load() {};
+		virtual void load(States::Manager* manager) {};
 		virtual void initialize(States::Manager* manager) {};
 
 		virtual void pause() {};

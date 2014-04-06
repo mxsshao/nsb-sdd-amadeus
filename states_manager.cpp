@@ -19,7 +19,7 @@ void States::Manager::changeState(States::Base* state)
 
 	// store and init the new state
 	nStates.push_back(state);
-	nStates.back()->load();
+	nStates.back()->load(this);
 	nStates.back()->initialize(this);
 
 	al_flush_event_queue(event_queue);
@@ -28,10 +28,10 @@ void States::Manager::changeState(States::Base* state)
 void States::Manager::pauseState(States::Base* state)
 {
 	if (!nStates.empty()) {
+		state->load(this);
+		state->initialize(this);
 		nStates.back()->pause();
 		nStates.push_back(state);
-		nStates.back()->load();
-		nStates.back()->initialize(this);
 	}
 }
 

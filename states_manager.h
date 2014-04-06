@@ -26,7 +26,7 @@ namespace States
 		void changeState(States::Base* state);
 		void pauseState(States::Base* state);
 		void resumeState();
-		void pushState(States::Base* state) {nStates.push_back(state);nStates.back()->load();nStates.back()->initialize(this);};
+		void pushState(States::Base* state) {nStates.push_back(state);nStates.back()->load(this);nStates.back()->initialize(this);};
 		void popState() {if(!nStates.empty()){nStates.back()->cleanup();nStates.pop_back();}};
 
 		void handleEvents(ALLEGRO_EVENT& ev) {if(!nStates.empty()){nStates.back()->handleEvents(ev);}};
