@@ -31,6 +31,8 @@ namespace ATX
 		void button3Click() {window->Show();};
 		Gwen::Controls::Button* button4;
 		void button4Click() {radarWindow->Show();};
+		Gwen::Controls::Button* buttonMenu;
+		void buttonMenuClick();
 
 		Gwen::Controls::WindowControl* radarWindow;
 		Gwen::Controls::ImagePanel* radarPanel;
@@ -61,8 +63,8 @@ namespace ATX
 
 		void resetSelected();
 
-		void pause() {};
-		void resume() {};
+		void pause();
+		void resume();
 
 		void handleEvents(ALLEGRO_EVENT &ev);
 		void render();

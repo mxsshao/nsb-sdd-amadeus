@@ -26,7 +26,7 @@ namespace ATX
 		void resume() {};
 
 		void handleEvents(ALLEGRO_EVENT &ev) {};
-		void render() {};
+		void render() {al_draw_bitmap(back, 0, 0, 0);};
 
 		void cleanup() {};
 

@@ -121,7 +121,7 @@ int main(int argc, char **argv)
 		}
 		else
 		{
-			ATX::Main::getInstance()->handleEvents(ev);
+			States::Manager::getInstance()->handleEvents(ev);
 			//ATC_flight_display::getInstance()->handleEvents(ev);
 		}
 
@@ -130,7 +130,7 @@ int main(int argc, char **argv)
 
 		if (al_is_event_queue_empty(event_queue))
 		{
-			ATX::Main::getInstance()->render();
+			States::Manager::getInstance()->render();
 			//ATC_flight_display::getInstance()->render();
 
 			frames ++;

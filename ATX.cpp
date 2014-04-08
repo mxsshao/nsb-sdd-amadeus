@@ -1,4 +1,5 @@
 #include "ATX.h"
+#include "ATX_menu.h"
 
 ATX::Main ATX::Main::mMain;
 
@@ -67,6 +68,12 @@ void ATX::Main::initialize(States::Manager* manager)
 	button4->Dock(Gwen::Pos::Top);
 	button4->onPress.Add(this, &ATX::Main::button4Click);
 
+	buttonMenu = new Gwen::Controls::Button(testControl);
+	buttonMenu->SetText(L"Pause");
+	buttonMenu->SetSize(300, 30);
+	buttonMenu->Dock(Gwen::Pos::Top);
+	buttonMenu->onPress.Add(this, &ATX::Main::buttonMenuClick);
+
 	radarWindow = new Gwen::Controls::WindowControl(canvas);
 	radarWindow->SetTitle(L"Radar");
 	//radarWindow->SetClosable(false);
@@ -88,6 +95,11 @@ void ATX::Main::initialize(States::Manager* manager)
 	nAircraft.push_back(new Aircraft(window, 0, 0, 0, 0, 0.4f, 120.0f, 4, "TG380"));
 
 	nAircraft.front()->select();
+}
+
+void ATX::Main::buttonMenuClick()
+{
+	States::Manager::getInstance()->pauseState(ATX::Menu::getInstance());
 }
 
 void ATX::Main::windowResize()
@@ -114,6 +126,14 @@ void ATX::Main::resetSelected()
 		}
 	}
 	camera.following = NULL;
+}
+
+void ATX::Main::pause()
+{
+}
+
+void ATX::Main::resume()
+{
 }
 
 void ATX::Main::breakaway()
@@ -397,6 +417,4 @@ void ATX::Main::render()
 
 	al_set_target_bitmap(back);
 	al_draw_bitmap(screen, 0, 0, 0);
-
-	canvas->GetCanvas()->RenderCanvas();
 }

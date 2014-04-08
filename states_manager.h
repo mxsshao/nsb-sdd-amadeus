@@ -30,7 +30,7 @@ namespace States
 		void popState() {if(!nStates.empty()){nStates.back()->cleanup();nStates.pop_back();}};
 
 		void handleEvents(ALLEGRO_EVENT& ev) {if(!nStates.empty()){nStates.back()->handleEvents(ev);}};
-		void render() {if(!nStates.empty()){nStates.back()->render();}};
+		void render() {if(!nStates.empty()){nStates.back()->render();}canvas->GetCanvas()->RenderCanvas();};
 
 		void cleanup() {};
 

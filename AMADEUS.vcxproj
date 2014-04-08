@@ -74,6 +74,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\SDD-LIB\allegro\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\SDD-LIB\allegro\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -86,15 +88,15 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>D:\SDD-LIB\tinyxml2;D:\SDD-LIB\gwen\include;D:\SDD-LIB\allegro\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\SDD-LIB\tinyxml2;C:\SDD-LIB\gwen\include;C:\SDD-LIB\allegro\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\SDD-LIB\tinyxml2\tinyxml2\bin\Win32-Debug-Dll;D:\SDD-LIB\gwen\lib;D:\SDD-LIB\allegro\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>D:\SDD-LIB\tinyxml2\tinyxml2\bin\Win32-Debug-Dll\tinyxml2.lib;D:\SDD-LIB\gwen\lib\windows\vs2010\GWEND-Renderer-Allegrod.lib;D:\SDD-LIB\gwen\lib\windows\vs2010\gwen_staticd.lib;allegro-5.1.7-monolith-md-debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\SDD-LIB\tinyxml2\tinyxml2\bin\Win32-Debug-Dll;C:\SDD-LIB\gwen\lib;C:\SDD-LIB\allegro\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>C:\SDD-LIB\tinyxml2\tinyxml2\bin\Win32-Debug-Dll\tinyxml2.lib;C:\SDD-LIB\gwen\lib\windows\vs2010\GWEND-Renderer-Allegrod.lib;C:\SDD-LIB\gwen\lib\windows\vs2010\gwen_staticd.lib;allegro-5.1.7-monolith-md-debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Message>VERSION</Message>
@@ -130,12 +132,14 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\SDD-LIB\tinyxml2;C:\SDD-LIB\gwen\include;C:\SDD-LIB\allegro\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>C:\SDD-LIB\tinyxml2\tinyxml2\bin\Win32-Release-Dll\tinyxml2.lib;C:\SDD-LIB\gwen\lib\windows\vs2010\GWEN-Renderer-Allegro.lib;C:\SDD-LIB\gwen\lib\windows\vs2010\gwen_static.lib;allegro-5.1.7-monolith-md.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
