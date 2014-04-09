@@ -1,0 +1,13 @@
+<Source src="FIDS2.png"/>
+
+<Font0 src="OpenSans.ttf" point="12"/>
+<Font1 src="OpenSans.ttf" point="16"/>
+
+<Base sx="0.0" sy="0.0" sw="505.0" sh="66.0" dx="0.0" dy="0.0"/>
+<SelectedBase sx="0.0" sy="128.0" sw="505.0" sh="66.0" dx="0.0" dy="0.0"/>
+<BarGreen sx="0.0" sy="0.0" sw="0.0" sh="0.0" dx="0.0" dy="0.0"/>
+<Airline sx="0.0" sy="0.0" sw="0.0" sh="0.0" dx="21" dy="17"/>
+	
+<Aircraft dx="246.0" dy="10.0" align="1" size="0" r="255" g="255" b="255"/>
+<Flight dx="130" dy="10" align="0" size="1" r="255" g="255" b="255"/>
+<Destination dx="278" dy="30" align="1" size="1" r="255" g="255" b="255"/>

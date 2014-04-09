@@ -41,6 +41,12 @@ void ATX::Main::initialize(States::Manager* manager)
 	testControl->SetPos(0, displayH-300);
 	testControl->DisableResizing();
 
+	buttonMenu = new Gwen::Controls::Button(testControl);
+	buttonMenu->SetText(L"Pause");
+	buttonMenu->SetSize(300, 30);
+	buttonMenu->Dock(Gwen::Pos::Top);
+	buttonMenu->onPress.Add(this, &ATX::Main::buttonMenuClick);
+
 	button1 = new Gwen::Controls::Button(testControl);
 	button1->SetText(L"Add Flight");
 	button1->SetSize(200, 30);
@@ -67,12 +73,6 @@ void ATX::Main::initialize(States::Manager* manager)
 	button4->SetSize(300, 30);
 	button4->Dock(Gwen::Pos::Top);
 	button4->onPress.Add(this, &ATX::Main::button4Click);
-
-	buttonMenu = new Gwen::Controls::Button(testControl);
-	buttonMenu->SetText(L"Pause");
-	buttonMenu->SetSize(300, 30);
-	buttonMenu->Dock(Gwen::Pos::Top);
-	buttonMenu->onPress.Add(this, &ATX::Main::buttonMenuClick);
 
 	radarWindow = new Gwen::Controls::WindowControl(canvas);
 	radarWindow->SetTitle(L"Radar");

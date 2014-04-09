@@ -15,6 +15,8 @@ namespace ATX
 		ALLEGRO_BITMAP* back;
 
 		Gwen::Controls::WindowControl* window;
+		Gwen::Controls::Button* button1;
+		void button1Click() {States::Manager::getInstance()->resumeState();};
 
 	public:
 		static Menu* getInstance() {return &mMenu;};
@@ -28,7 +30,7 @@ namespace ATX
 		void handleEvents(ALLEGRO_EVENT &ev) {};
 		void render() {al_draw_bitmap(back, 0, 0, 0);};
 
-		void cleanup() {};
+		void cleanup() {al_destroy_bitmap(back); window->DelayedDelete();};
 
 	};
 };

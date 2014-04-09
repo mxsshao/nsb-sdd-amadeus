@@ -27,7 +27,7 @@ void States::Manager::changeState(States::Base* state)
 
 void States::Manager::pauseState(States::Base* state)
 {
-	if (!nStates.empty()) {
+	if (!nStates.empty() && nStates.back() != state) {
 		nStates.back()->pause();
 		nStates.push_back(state);
 		state->load(this);
