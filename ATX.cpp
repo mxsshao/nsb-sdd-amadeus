@@ -247,7 +247,7 @@ void ATX::Main::update()
 				breakaway();
 				delete(*iter);
 				nAircraft.erase(iter++);
-				if (!nAircraft.empty() && shouldSelect)
+				if (iter != nAircraft.end() && shouldSelect)
 				{
 					(*iter)->select();
 				}

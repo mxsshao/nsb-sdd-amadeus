@@ -318,6 +318,7 @@ void ATX::Aircraft::render()
 
 	int x = 0;
 	int y = 0;
+	float Scale = 0.8f;
 
 	if (state <= 14)
 	{
@@ -330,7 +331,6 @@ void ATX::Aircraft::render()
 		x = ceil((state - 16) / 2) * 250;
 	}
 
-	double Scale = 0.8f;
 	al_draw_tinted_scaled_rotated_bitmap_region(plane, x, y, 250, 250, al_map_rgb_f(1,1,1), 125, 125, Aircraft::x, Aircraft::y, Scale, Scale, currentHeading/180.0f*ALLEGRO_PI, 0);
 
 }
