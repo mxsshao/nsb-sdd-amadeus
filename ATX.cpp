@@ -42,7 +42,7 @@ void ATX::Main::initialize(States::Manager* manager)
 	testControl->DisableResizing();
 
 	buttonMenu = new Gwen::Controls::Button(testControl);
-	buttonMenu->SetText(L"Pause");
+	buttonMenu->SetText(L"MENU");
 	buttonMenu->SetSize(300, 30);
 	buttonMenu->Dock(Gwen::Pos::Top);
 	buttonMenu->onPress.Add(this, &ATX::Main::buttonMenuClick);
@@ -91,8 +91,8 @@ void ATX::Main::initialize(States::Manager* manager)
 
 	Aircraft::initialize();
 
-	nAircraft.push_back(new Aircraft(window, 1000, 1000, 0, 3, 0.5f, 90.0f, 2, "MU330"));
-	nAircraft.push_back(new Aircraft(window, 0, 0, 0, 0, 0.4f, 120.0f, 4, "TG380"));
+	//nAircraft.push_back(new Aircraft(window, 1000, 1000, 0, 3, 0.5f, 90.0f, 2, "MU330"));
+	nAircraft.push_back(new Aircraft(window, 0, 0, 0, 0, 0.4f, 120.0f, 4, "TG3802"));
 
 	nAircraft.front()->select();
 }

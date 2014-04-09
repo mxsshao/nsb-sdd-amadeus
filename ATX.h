@@ -25,7 +25,7 @@ namespace ATX
 		void windowResize();
 		Gwen::Controls::WindowControl* testControl;
 		Gwen::Controls::Button* button1;
-		void button1Click() {if(nAircraft.size() <= 35){nAircraft.push_back(new Aircraft(window, 1000, 1000, 0, 3, 0.5f, 90.0f, 2, "MU330"));nAircraft.back()->select();}};
+		void button1Click() {if(nAircraft.size() < 148){nAircraft.push_back(new Aircraft(window, 1000, 1000, 0, 3, 0.5f, 90.0f, 2, "MU330"));nAircraft.back()->select();}};
 		Gwen::Controls::Button* button2;
 		Gwen::Controls::Button* button3;
 		void button3Click() {window->Show();};

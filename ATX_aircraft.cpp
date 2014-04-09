@@ -321,17 +321,17 @@ void ATX::Aircraft::render()
 
 	if (state <= 14)
 	{
-		y = 1000;
-		x = floor((14 - state) / 2) * 500;
+		y = 500;
+		x = floor((14 - state) / 2) * 250;
 	}
 	else if (state >= 16)
 	{
-		y = 500;
-		x = ceil((state - 16) / 2) * 500;
+		y = 250;
+		x = ceil((state - 16) / 2) * 250;
 	}
 
-	double Scale = 0.4f;
-	al_draw_tinted_scaled_rotated_bitmap_region(plane, x, y, 500, 500, al_map_rgb_f(1,1,1), 250, 250, Aircraft::x, Aircraft::y, Scale, Scale, currentHeading/180.0f*ALLEGRO_PI, 0);
+	double Scale = 0.8f;
+	al_draw_tinted_scaled_rotated_bitmap_region(plane, x, y, 250, 250, al_map_rgb_f(1,1,1), 125, 125, Aircraft::x, Aircraft::y, Scale, Scale, currentHeading/180.0f*ALLEGRO_PI, 0);
 
 }
 
