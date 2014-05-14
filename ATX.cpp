@@ -74,6 +74,14 @@ void ATX::Main::initialize(States::Manager* manager)
 	button4->Dock(Gwen::Pos::Top);
 	button4->onPress.Add(this, &ATX::Main::button4Click);
 
+	combo = new Gwen::Controls::ComboBox(testControl);
+	combo->SetSize(300, 30);
+	combo->Dock(Gwen::Pos::Top);
+	combo->SetMargin(0);
+	combo->SetAlignment(Gwen::Pos::Center);
+	combo->AddItem(L"Default", "one");
+	combo->AddItem(L"Simple", "one");
+
 	radarWindow = new Gwen::Controls::WindowControl(canvas);
 	radarWindow->SetTitle(L"Radar");
 	//radarWindow->SetClosable(false);

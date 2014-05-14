@@ -31,6 +31,7 @@ namespace ATX
 		void button3Click() {window->Show();};
 		Gwen::Controls::Button* button4;
 		void button4Click() {radarWindow->Show();};
+		Gwen::Controls::ComboBox* combo;
 		Gwen::Controls::Button* buttonMenu;
 		void buttonMenuClick();
 

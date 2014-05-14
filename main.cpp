@@ -42,6 +42,7 @@ int main(int argc, char **argv)
 	ALLEGRO_FONT* font;
 
 	//Display
+	al_set_new_display_flags(ALLEGRO_RESIZABLE);
 	//al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
 	//al_set_new_display_option(ALLEGRO_SAMPLE_BUFFERS, 1, ALLEGRO_SUGGEST);
 	//al_set_new_display_option(ALLEGRO_SAMPLES, 8, ALLEGRO_SUGGEST);
@@ -52,6 +53,8 @@ int main(int argc, char **argv)
 		al_show_native_message_box(NULL, "ERROR", "A02:", "Error creating display.", NULL, ALLEGRO_MESSAGEBOX_ERROR);
 		return -1;
 	}
+
+	al_toggle_display_flag(display, ALLEGRO_FULLSCREEN_WINDOW, false);
 
 	std::cout << "Display created " << al_get_display_width(display) << "*" << al_get_display_height(display) << std::endl;
 	
