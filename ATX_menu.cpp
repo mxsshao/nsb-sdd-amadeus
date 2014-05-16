@@ -37,4 +37,10 @@ void ATX::Menu::initialize(States::Manager* manager)
 	button2->SetSize(200, 60);
 	button2->Dock(Gwen::Pos::Top);
 	button2->onToggle.Add(this, &ATX::Menu::button2Click);
+
+	button3 = new Gwen::Controls::Button(window);
+	button3->SetText(L"Quit");
+	button3->SetSize(200, 60);
+	button3->Dock(Gwen::Pos::Top);
+	button3->onPress.Add(this, &ATX::Menu::button3Click);
 }

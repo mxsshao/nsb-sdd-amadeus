@@ -169,6 +169,7 @@
     <ClCompile Include="ATX_menu.cpp" />
     <ClCompile Include="ctrldisplay.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="scenario_menu.cpp" />
     <ClCompile Include="states_manager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -182,6 +183,7 @@
     <ClInclude Include="ctrldisplay.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="scenario_menu.h" />
     <ClInclude Include="states_base.h" />
     <ClInclude Include="states_manager.h" />
     <ClInclude Include="version.h" />

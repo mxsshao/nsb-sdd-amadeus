@@ -21,7 +21,7 @@ void ATX::Main::initialize(States::Manager* manager)
 
 	window = new Gwen::Controls::WindowControl(canvas);
 	window->MakeScroll();
-	window->GetScroll()->SetScroll(false, true);
+	window->GetScroll()->SetScroll(true, true);
 	window->GetScroll()->onResize.Add(this, &ATX::Main::windowResize);
 	window->SetTitle(L"Flight Information");
 	//window->MakeModal(false);

@@ -1,6 +1,7 @@
 #include "states_manager.h"
 
 States::Manager States::Manager::mManager;
+bool States::Manager::done;
 
 void States::Manager::initialize(ALLEGRO_DISPLAY* pDisplay, ALLEGRO_EVENT_QUEUE* pEvent_queue, Gwen::Controls::Base* pCanvas)
 {

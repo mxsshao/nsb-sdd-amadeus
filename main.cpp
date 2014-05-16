@@ -1,8 +1,7 @@
 #include "global.h"
 #include "ctrldisplay.h"
 #include "ATX.h"
-#include "ATC.h"
-#include "ATC_flight_display.h"
+#include "scenario_menu.h"
 #include "states_manager.h"
 
 int main(int argc, char **argv)
@@ -94,7 +93,7 @@ int main(int argc, char **argv)
 	//EVENT INIT
 	event_queue = al_create_event_queue();
 	timer = al_create_timer(1.0 / 60);
-	bool done = false;
+	States::Manager::done = false;
 
 	//EVENT SOURCE
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
@@ -106,26 +105,24 @@ int main(int argc, char **argv)
 
 	//INIT
 	States::Manager::getInstance()->initialize(display, event_queue, base);
-	States::Manager::getInstance()->changeState(ATX::Main::getInstance());
-	//ATX::Main::getInstance()->initialize(al_get_display_width(display), al_get_display_height(display), base);
-	//ATC_flight_display::getInstance()->initialize(base);
+	//States::Manager::getInstance()->changeState(ATX::Main::getInstance());
+	States::Manager::getInstance()->changeState(Scenario::Menu::getInstance());
 
 	std::cout << "Loading Done" << std::endl;
 
 	//EVENT LOOP
-	while (!done)
+	while (!States::Manager::done)
 	{
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(event_queue, &ev);
 
 		if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
 		{
-			done = true;
+			States::Manager::done = true;
 		}
 		else
 		{
 			States::Manager::getInstance()->handleEvents(ev);
-			//ATC_flight_display::getInstance()->handleEvents(ev);
 		}
 
 		GwenInput.ProcessMessage(ev);
@@ -134,7 +131,6 @@ int main(int argc, char **argv)
 		if (al_is_event_queue_empty(event_queue))
 		{
 			States::Manager::getInstance()->render();
-			//ATC_flight_display::getInstance()->render();
 
 			frames ++;
 			if(al_current_time() - gameTime >= 1)
@@ -147,7 +143,7 @@ int main(int argc, char **argv)
 			al_draw_textf(font, al_map_rgb(255, 255, 0), 10, 680, 0, "FPS: %i", gameFPS);
 
 			al_flip_display();
-			al_clear_to_color(al_map_rgb(0, 0, 0));
+			al_clear_to_color(al_map_rgb(100, 100, 255));
 		}
 	}
 

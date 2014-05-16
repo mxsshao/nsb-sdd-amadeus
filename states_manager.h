@@ -20,6 +20,7 @@ namespace States
 		Gwen::Controls::Base* canvas;
 
 	public:
+		static bool done;
 		static Manager* getInstance() {return &mManager;};
 		void initialize(ALLEGRO_DISPLAY* pDisplay, ALLEGRO_EVENT_QUEUE* pEvent_queue, Gwen::Controls::Base* pCanvas);
 

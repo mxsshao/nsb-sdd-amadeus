@@ -21,6 +21,10 @@ namespace ATX
 		void button2Click() {
 			al_toggle_display_flag(al_get_current_display(), ALLEGRO_FULLSCREEN_WINDOW, button2->GetToggleState());
 		};
+		Gwen::Controls::Button* button3;
+		void button3Click() {
+			States::Manager::done = true;
+		};
 
 	public:
 		static Menu* getInstance() {return &mMenu;};
