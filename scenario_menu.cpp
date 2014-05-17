@@ -27,6 +27,7 @@ void Scenario::Menu::initialize(States::Manager* manager)
 	scenario2 = al_load_bitmap("Resources/scenario2.png");
 	scenario3 = al_load_bitmap("Resources/scenario3.png");
 	scenarioButtons = al_load_bitmap("Resources/scenariobuttons.png");
+	scenarioButtons2 = al_load_bitmap("Resources/scenariobuttons2.png");
 
 	button1 = new Gwen::Controls::Button(scroll);
 	button1->SetShouldDrawBackground(false);
@@ -34,6 +35,8 @@ void Scenario::Menu::initialize(States::Manager* manager)
 	button1->SetSize(434*ratio, 206*ratio);
 	button1->SetPos(320*ratio, 540*ratio);
 	button1->SetCursor(Gwen::CursorType::Finger);
+	button1->onHoverEnter.Add(this, &Scenario::Menu::button1HoverEnter);
+	button1->onHoverLeave.Add(this, &Scenario::Menu::button1HoverLeave);
 
 	buttonBack = new Gwen::Controls::Button(canvas);
 	buttonBack->SetText(L"Back");

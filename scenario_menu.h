@@ -16,6 +16,8 @@ namespace Scenario
 		Gwen::Controls::ScrollControl* scroll;
 		void scrollMove();
 		Gwen::Controls::Button* button1;
+		void button1HoverEnter() {button1->SetImage(al_create_sub_bitmap(scenarioButtons2, 0, 0, 434, 206));};
+		void button1HoverLeave() {button1->SetImage(al_create_sub_bitmap(scenarioButtons, 0, 0, 434, 206));};
 		Gwen::Controls::Button* buttonBack;
 		Gwen::Controls::Base* padding;
 
@@ -28,6 +30,7 @@ namespace Scenario
 		float position;
 
 		ALLEGRO_BITMAP* scenarioButtons;
+		ALLEGRO_BITMAP* scenarioButtons2;
 
 	public:
 		static Menu* getInstance() {return &mMenu;};
