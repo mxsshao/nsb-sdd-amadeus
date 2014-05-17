@@ -45,3 +45,28 @@ void States::Manager::resumeState()
 		nStates.back()->resume();
 	}
 }
+
+void States::Manager::handleEvents(ALLEGRO_EVENT& ev)
+{
+	if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
+	{
+		done = true;
+	}
+	else if (ev.type == ALLEGRO_EVENT_DISPLAY_RESIZE)
+	{
+		al_resize_display(ev.display.source, ev.display.width, ev.display.height);
+		canvas->GetCanvas()->SetSize(ev.display.width, ev.display.height);
+		canvas->SetSize(ev.display.width, ev.display.height);
+		if(!nStates.empty())
+		{
+			nStates.back()->resize(this);
+		}
+	}
+	else
+	{
+		if(!nStates.empty())
+		{
+			nStates.back()->handleEvents(ev);
+		}
+	}
+}

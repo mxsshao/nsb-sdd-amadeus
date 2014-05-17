@@ -13,6 +13,7 @@ namespace States
 	public:
 		virtual void load(States::Manager* manager) {};
 		virtual void initialize(States::Manager* manager) {};
+		virtual void resize(States::Manager* manager) {};
 
 		virtual void pause() {};
 		virtual void resume() {};

@@ -116,14 +116,7 @@ int main(int argc, char **argv)
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(event_queue, &ev);
 
-		if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
-		{
-			States::Manager::done = true;
-		}
-		else
-		{
-			States::Manager::getInstance()->handleEvents(ev);
-		}
+		States::Manager::getInstance()->handleEvents(ev);
 
 		GwenInput.ProcessMessage(ev);
 		canvas->ProcessDelayedDeletes();
@@ -143,7 +136,7 @@ int main(int argc, char **argv)
 			al_draw_textf(font, al_map_rgb(255, 255, 0), 10, 680, 0, "FPS: %i", gameFPS);
 
 			al_flip_display();
-			al_clear_to_color(al_map_rgb(100, 100, 255));
+			al_clear_to_color(al_map_rgb(0, 124, 150));
 		}
 	}
 

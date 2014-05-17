@@ -61,6 +61,7 @@ namespace ATX
 
 		void load(States::Manager* manager) {};
 		void initialize(States::Manager* manager);
+		void resize(States::Manager* manager) {};
 
 		void resetSelected();
 

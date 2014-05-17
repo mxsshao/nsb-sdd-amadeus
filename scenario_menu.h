@@ -29,6 +29,8 @@ namespace Scenario
 		float offset;
 		float position;
 
+		bool out;
+
 		ALLEGRO_BITMAP* scenarioButtons;
 		ALLEGRO_BITMAP* scenarioButtons2;
 
@@ -37,6 +39,7 @@ namespace Scenario
 
 		void load(States::Manager* manager) {};
 		void initialize(States::Manager* manager);
+		void resize(States::Manager* manager);
 
 		void pause() {};
 		void resume() {};
