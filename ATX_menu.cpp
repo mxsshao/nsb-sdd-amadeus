@@ -1,4 +1,5 @@
 #include "ATX_menu.h"
+#include "scenario_menu.h"
 
 ATX::Menu ATX::Menu::mMenu;
 
@@ -38,8 +39,21 @@ void ATX::Menu::initialize(States::Manager* manager)
 	button2->onToggle.Add(this, &ATX::Menu::button2Click);
 
 	button3 = new Gwen::Controls::Button(window);
-	button3->SetText(L"Quit");
+	button3->SetText(L"Scenario Select");
 	button3->SetSize(200, 60);
 	button3->Dock(Gwen::Pos::Top);
 	button3->onPress.Add(this, &ATX::Menu::button3Click);
+
+	button4 = new Gwen::Controls::Button(window);
+	button4->SetText(L"Quit");
+	button4->SetSize(200, 60);
+	button4->Dock(Gwen::Pos::Top);
+	button4->onPress.Add(this, &ATX::Menu::button4Click);
+}
+
+void ATX::Menu::button3Click()
+{
+	//ATX::Main::getInstance()->cleanup();
+	States::Manager::getInstance()->changeState(Scenario::Menu::getInstance());
+	//States::Manager::getInstance()->changeState(ATX::Main::getInstance());
 }

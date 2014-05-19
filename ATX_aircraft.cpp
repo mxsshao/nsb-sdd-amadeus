@@ -110,6 +110,13 @@ void ATX::Aircraft::initialize()
 	nWaypoints[4].nConnected.push_back(3);
 }
 
+void ATX::Aircraft::cleanup()
+{
+	al_destroy_bitmap(aircraftButton);
+	al_destroy_font(nFonts[0]);
+	al_destroy_font(nFonts[1]);
+}
+
 void ATX::Aircraft::resize()
 {
 	button->SetSize(button->GetActualParent()->GetBounds().w, button->GetActualParent()->GetBounds().w / gBase.sw * gBase.sh);

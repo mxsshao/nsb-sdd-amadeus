@@ -14,6 +14,8 @@ namespace Scenario
 
 		Gwen::Controls::Base* canvas;
 		Gwen::Controls::WindowControl* window;
+		Gwen::Controls::Button* windowButton;
+		void windowButtonClick();
 		Gwen::Controls::ScrollControl* scroll;
 		void scrollMove();
 		Gwen::Controls::Button* button1;
@@ -63,6 +65,6 @@ namespace Scenario
 		void handleEvents(ALLEGRO_EVENT &ev);
 		void render();
 
-		void cleanup() {};
+		void cleanup();
 	};
 };

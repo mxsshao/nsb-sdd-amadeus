@@ -22,7 +22,9 @@ namespace ATX
 			al_toggle_display_flag(al_get_current_display(), ALLEGRO_FULLSCREEN_WINDOW, button2->GetToggleState());
 		};
 		Gwen::Controls::Button* button3;
-		void button3Click() {
+		void button3Click();
+		Gwen::Controls::Button* button4;
+		void button4Click() {
 			States::Manager::done = true;
 		};
 

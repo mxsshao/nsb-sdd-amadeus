@@ -116,10 +116,11 @@ int main(int argc, char **argv)
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(event_queue, &ev);
 
+		canvas->ProcessDelayedDeletes();
+
 		States::Manager::getInstance()->handleEvents(ev);
 
 		GwenInput.ProcessMessage(ev);
-		canvas->ProcessDelayedDeletes();
 
 		if (al_is_event_queue_empty(event_queue))
 		{

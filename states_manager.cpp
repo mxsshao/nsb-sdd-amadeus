@@ -12,7 +12,14 @@ void States::Manager::initialize(ALLEGRO_DISPLAY* pDisplay, ALLEGRO_EVENT_QUEUE*
 
 void States::Manager::changeState(States::Base* state)
 {
+	//CHANGING STATE NEEDS TO REMOVE PAUSED STATE AS WELL
+
+
 	// cleanup the current state
+	if (!nStates.empty()) {
+		nStates.back()->cleanup();
+		nStates.pop_back();
+	}
 	if (!nStates.empty()) {
 		nStates.back()->cleanup();
 		nStates.pop_back();

@@ -429,5 +429,23 @@ void ATX::Main::render()
 
 void ATX::Main::cleanup()
 {
-	//canvas
+	window->DelayedDelete();
+	testControl->DelayedDelete();
+	radarWindow->DelayedDelete();
+
+	al_destroy_bitmap(screen);
+	al_destroy_bitmap(radarImage);
+	al_destroy_bitmap(bg);
+
+	if (!nAircraft.empty())
+	{
+		for (iter = nAircraft.begin(); iter != nAircraft.end();)
+		{
+			delete(*iter);
+			nAircraft.erase(iter++);
+		}
+	}
+	ATX::Aircraft::cleanup();
+
+	al_destroy_bitmap(bar);
 }

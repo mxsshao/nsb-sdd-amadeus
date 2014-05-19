@@ -46,6 +46,7 @@ namespace ATX
 		~Aircraft();
 
 		static void initialize();
+		static void cleanup();
 
 		bool done;
 

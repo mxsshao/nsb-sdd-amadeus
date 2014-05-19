@@ -1,4 +1,5 @@
 #include "scenario_menu.h"
+#include "ATX.h"
 
 Scenario::Menu Scenario::Menu::mMenu;
 
@@ -99,18 +100,30 @@ void Scenario::Menu::resize(States::Manager* manager)
 
 	out = offset / height > 5760.0f / 1080.0f;
 	
-	windowResize();
+	//windowResize();
+}
+
+void Scenario::Menu::windowButtonClick()
+{
+	States::Manager::getInstance()->changeState(ATX::Main::getInstance());
+	//States::Manager::getInstance()->changeState(Scenario::Menu::getInstance());
 }
 
 void Scenario::Menu::windowCreate()
 {
 	//FIX DOUBLE CLICKING BUTTON CREATING MORE WINDOWS
+
+	//FIX UNABLE TO RESIZE WINDOWS -> POINTERS NOT BEING CLEARED
 		window = new Gwen::Controls::WindowControl(canvas);
 		window->MakeModal();
 		window->SetClosable(true);
 		window->DisableResizing();
 		window->SetTitle(L"Scenario");
 		window->SetDeleteOnClose(true);
+
+		windowButton = new Gwen::Controls::Button(window);
+		windowButton->SetText(L"Start");
+		windowButton->onPress.Add(this, &Scenario::Menu::windowButtonClick);
 
 		windowResize();
 }
@@ -121,6 +134,8 @@ void Scenario::Menu::windowResize()
 	{
 		window->SetSize(400, 300);
 		window->SetPos((offset - 400)/2, (height-300)/2);
+		windowButton->SetSize(400,100);
+		windowButton->Dock(Gwen::Pos::Top);
 	}
 }
 
@@ -143,4 +158,21 @@ void Scenario::Menu::render()
 	{
 		al_draw_scaled_bitmap(scenario3, 0, 0, 1920, 1080, width/3.0f*4.0f - position, 0, -width/3.0f, height, 0);
 	}
+}
+
+void Scenario::Menu::cleanup()
+{
+	scroll->DelayedDelete();
+	buttonBack->DelayedDelete();
+	if (window)
+		window->CloseButtonPressed();
+
+	al_destroy_bitmap(scenario1);
+	al_destroy_bitmap(scenario2);
+	al_destroy_bitmap(scenario3);
+
+	al_destroy_bitmap(scenarioButtons);
+	al_destroy_bitmap(scenarioButtons2);
+
+
 }
