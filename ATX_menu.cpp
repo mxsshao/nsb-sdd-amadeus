@@ -22,7 +22,6 @@ void ATX::Menu::initialize(States::Manager* manager)
 	window->SetTitle(L"Pause");
 	window->SetSize(400, 300);
 	window->SetPos((displayW - 400)/2, (displayH-300)/2);
-	window->SetMinimumSize(Gwen::Point(200,200));
 
 	button1 = new Gwen::Controls::Button(window);
 	button1->SetText(L"Resume");

@@ -21,7 +21,7 @@ void ATX::Main::initialize(States::Manager* manager)
 
 	window = new Gwen::Controls::WindowControl(canvas);
 	window->MakeScroll();
-	window->GetScroll()->SetScroll(true, true);
+	window->GetScroll()->SetScroll(false, true);
 	window->GetScroll()->onResize.Add(this, &ATX::Main::windowResize);
 	window->SetTitle(L"Flight Information");
 	//window->MakeModal(false);
@@ -425,4 +425,9 @@ void ATX::Main::render()
 
 	al_set_target_bitmap(back);
 	al_draw_bitmap(screen, 0, 0, 0);
+}
+
+void ATX::Main::cleanup()
+{
+	//canvas
 }

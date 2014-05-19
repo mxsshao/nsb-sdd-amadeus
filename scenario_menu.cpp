@@ -24,10 +24,43 @@ void Scenario::Menu::initialize(States::Manager* manager)
 
 	button1 = new Gwen::Controls::Button(scroll);
 	button1->SetShouldDrawBackground(false);
-	button1->SetImage(al_create_sub_bitmap(scenarioButtons, 0, 0, 434, 206));
+	button1->SetImage(al_create_sub_bitmap(scenarioButtons, 0, 0, 340, 206));
 	button1->SetCursor(Gwen::CursorType::Finger);
+	button1->onPress.Add(this, &Scenario::Menu::windowCreate);
 	button1->onHoverEnter.Add(this, &Scenario::Menu::button1HoverEnter);
 	button1->onHoverLeave.Add(this, &Scenario::Menu::button1HoverLeave);
+
+	button2 = new Gwen::Controls::Button(scroll);
+	button2->SetShouldDrawBackground(false);
+	button2->SetImage(al_create_sub_bitmap(scenarioButtons, 0, 256, 446, 206));
+	button2->SetCursor(Gwen::CursorType::Finger);
+	button2->onPress.Add(this, &Scenario::Menu::windowCreate);
+	button2->onHoverEnter.Add(this, &Scenario::Menu::button2HoverEnter);
+	button2->onHoverLeave.Add(this, &Scenario::Menu::button2HoverLeave);
+
+	button3 = new Gwen::Controls::Button(scroll);
+	button3->SetShouldDrawBackground(false);
+	button3->SetImage(al_create_sub_bitmap(scenarioButtons, 0, 512, 438, 206));
+	button3->SetCursor(Gwen::CursorType::Finger);
+	button3->onPress.Add(this, &Scenario::Menu::windowCreate);
+	button3->onHoverEnter.Add(this, &Scenario::Menu::button3HoverEnter);
+	button3->onHoverLeave.Add(this, &Scenario::Menu::button3HoverLeave);
+
+	button4 = new Gwen::Controls::Button(scroll);
+	button4->SetShouldDrawBackground(false);
+	button4->SetImage(al_create_sub_bitmap(scenarioButtons, 0, 768, 390, 206));
+	button4->SetCursor(Gwen::CursorType::Finger);
+	button4->onPress.Add(this, &Scenario::Menu::windowCreate);
+	button4->onHoverEnter.Add(this, &Scenario::Menu::button4HoverEnter);
+	button4->onHoverLeave.Add(this, &Scenario::Menu::button4HoverLeave);
+
+	button5 = new Gwen::Controls::Button(scroll);
+	button5->SetShouldDrawBackground(false);
+	button5->SetImage(al_create_sub_bitmap(scenarioButtons, 512, 0, 504, 206));
+	button5->SetCursor(Gwen::CursorType::Finger);
+	button5->onPress.Add(this, &Scenario::Menu::windowCreate);
+	button5->onHoverEnter.Add(this, &Scenario::Menu::button5HoverEnter);
+	button5->onHoverLeave.Add(this, &Scenario::Menu::button5HoverLeave);
 
 	buttonBack = new Gwen::Controls::Button(canvas);
 	buttonBack->SetText(L"Back");
@@ -50,13 +83,45 @@ void Scenario::Menu::resize(States::Manager* manager)
 
 	padding->SetPos(width, 0);
 
-	button1->SetSize(434*ratio, 206*ratio);
-	button1->SetPos(320*ratio, 540*ratio);
+	button1->SetSize(340*ratio, 206*ratio);
+	button1->SetPos(554*ratio, 542*ratio);
+	button2->SetSize(446*ratio, 206*ratio);
+	button2->SetPos(1172*ratio, 340*ratio);
+	button3->SetSize(438*ratio, 206*ratio);
+	button3->SetPos(1730*ratio, 678*ratio);
+	button4->SetSize(390*ratio, 206*ratio);
+	button4->SetPos(2462*ratio, 517*ratio);
+	button5->SetSize(504*ratio, 206*ratio);
+	button5->SetPos(3174*ratio, 456*ratio);
 
 	buttonBack->SetSize(300*ratio, 80*ratio);
 	buttonBack->SetPos(20*ratio, 960*ratio);
 
 	out = offset / height > 5760.0f / 1080.0f;
+	
+	windowResize();
+}
+
+void Scenario::Menu::windowCreate()
+{
+	//FIX DOUBLE CLICKING BUTTON CREATING MORE WINDOWS
+		window = new Gwen::Controls::WindowControl(canvas);
+		window->MakeModal();
+		window->SetClosable(true);
+		window->DisableResizing();
+		window->SetTitle(L"Scenario");
+		window->SetDeleteOnClose(true);
+
+		windowResize();
+}
+
+void Scenario::Menu::windowResize()
+{
+	if (window)
+	{
+		window->SetSize(400, 300);
+		window->SetPos((offset - 400)/2, (height-300)/2);
+	}
 }
 
 void Scenario::Menu::scrollMove()

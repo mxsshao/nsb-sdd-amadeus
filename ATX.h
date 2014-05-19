@@ -71,7 +71,7 @@ namespace ATX
 		void handleEvents(ALLEGRO_EVENT &ev);
 		void render();
 
-		void cleanup() {};
+		void cleanup();
 
 		Structs::Camera* getCamera() {return &camera;};
 		void setDisplayOffset(int displayW, int displayH) {offsetWidth = displayW/2; offsetHeight = displayH/2;};
