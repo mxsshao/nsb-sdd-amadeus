@@ -7,13 +7,6 @@ void ATX::Main::initialize(States::Manager* manager)
 {
 	canvas = manager->getCanvas();
 
-	int displayW = al_get_display_width(manager->getDisplay());
-	int displayH = al_get_display_height(manager->getDisplay());
-
-	screen = al_create_bitmap(displayW, displayH);
-
-	offsetWidth = displayW/2; offsetHeight = displayH/2;
-
 	bar = al_load_bitmap("Resources/bar.png");
 	bg = al_load_bitmap("Resources/bg.png");
 
@@ -27,8 +20,6 @@ void ATX::Main::initialize(States::Manager* manager)
 	//window->MakeModal(false);
 	//window->SetClosable(false);
 	//window->DisableResizing();
-	window->SetSize(400, 300);
-	window->SetPos(displayW - 400, displayH-300);
 	window->SetMinimumSize(Gwen::Point(200,200));
 	window->onResize.Add(this, &ATX::Main::windowResize);
 
@@ -37,8 +28,6 @@ void ATX::Main::initialize(States::Manager* manager)
 	//window->MakeModal(false);
 	testControl->SetClosable(false);
 	//window->DisableResizing();
-	testControl->SetSize(200, 300);
-	testControl->SetPos(0, displayH-300);
 	testControl->DisableResizing();
 
 	buttonMenu = new Gwen::Controls::Button(testControl);
@@ -85,17 +74,17 @@ void ATX::Main::initialize(States::Manager* manager)
 	radarWindow = new Gwen::Controls::WindowControl(canvas);
 	radarWindow->SetTitle(L"Radar");
 	//radarWindow->SetClosable(false);
-	radarWindow->SetSize(256, 256 + 28);
-	radarWindow->SetPos(0,0);
 	radarWindow->DisableResizing();
+
 
 	radarImage = al_load_bitmap("Resources/radar.png");
 	radarRender = al_create_bitmap(256,256);
 
 	radarPanel = new Gwen::Controls::ImagePanel(radarWindow);
-	radarPanel->Dock(Gwen::Pos::Top);
-	radarPanel->SetSize(radarWindow->GetBounds().w - 8, radarWindow->GetBounds().w - 8);
 	radarPanel->SetImage(radarRender);
+
+	first = true;
+	resize(manager);
 
 	Aircraft::initialize();
 
@@ -103,6 +92,56 @@ void ATX::Main::initialize(States::Manager* manager)
 	nAircraft.push_back(new Aircraft(window, 0, 0, 0, 0, 0.4f, 120.0f, 4, "TG3802"));
 
 	nAircraft.front()->select();
+}
+
+void ATX::Main::resize(States::Manager* manager)
+{
+	int originalW = displayW;
+	int originalH = displayH;
+
+
+	displayW = al_get_display_width(manager->getDisplay());
+	displayH = al_get_display_height(manager->getDisplay());
+	offsetWidth = displayW/2; offsetHeight = displayH/2;
+
+	if (first)
+	{
+		screen = al_create_bitmap(displayW, displayH);
+		
+		window->SetSize(400, 300);
+		window->SetPos(displayW - 400, displayH-300);
+
+		testControl->SetSize(200, 300);
+		testControl->SetPos(0, displayH-300);
+
+		radarWindow->SetSize(256, 256 + 28);
+		radarWindow->SetPos(0,0);
+		radarPanel->SetSize(radarWindow->GetBounds().w - 8, radarWindow->GetBounds().w - 8);
+		radarPanel->Dock(Gwen::Pos::Top);
+		first = false;
+	}
+	else
+	{
+		al_destroy_bitmap(screen);
+		screen = al_create_bitmap(displayW, displayH);
+
+		float a = window->GetBounds().x;
+		float b = window->GetBounds().y;
+
+		window->SetSize(400, 300);
+		window->SetPos(displayW - a + originalW, displayH - b + originalH);
+
+		a = testControl->GetBounds().y;
+
+		testControl->SetSize(200, 300);
+		testControl->SetPos(testControl->GetPos().x, displayH - a + originalH);
+
+		radarWindow->SetSize(256, 256 + 28);
+		//radarWindow->SetPos(radarWindow->GetPos().x, displayH + radarWindow->GetPos().y - originalH);
+		radarPanel->SetSize(radarWindow->GetBounds().w - 8, radarWindow->GetBounds().w - 8);
+		radarPanel->Dock(Gwen::Pos::Top);
+	}
+
 }
 
 void ATX::Main::buttonMenuClick()

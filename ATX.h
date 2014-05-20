@@ -41,6 +41,8 @@ namespace ATX
 		ALLEGRO_BITMAP* radarRender;
 		void radarWindowResize();
 
+		int displayW;
+		int displayH;
 		int offsetWidth;
 		int offsetHeight;
 
@@ -54,6 +56,7 @@ namespace ATX
 		void update();
 		void breakaway();
 
+		bool first;
 	public:
 		static Main* getInstance() {return &mMain;};
 
@@ -61,7 +64,7 @@ namespace ATX
 
 		void load(States::Manager* manager) {};
 		void initialize(States::Manager* manager);
-		void resize(States::Manager* manager) {};
+		void resize(States::Manager* manager);
 
 		void resetSelected();
 
