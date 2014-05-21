@@ -5,6 +5,8 @@ Scenario::Menu Scenario::Menu::mMenu;
 
 void Scenario::Menu::initialize(States::Manager* manager)
 {
+	std::cout << "MODULE		-Scenario Menu" << std::endl;
+
 	canvas = manager->getCanvas();
 	scroll = new Gwen::Controls::ScrollControl(canvas);
 	scroll->SetAutoHideBars(false);

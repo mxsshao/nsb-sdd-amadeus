@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 		al_show_native_message_box(NULL, "ERROR", "A01:", "Error loading Allegro.", NULL, ALLEGRO_MESSAGEBOX_ERROR);
 		return -1;
 	}
-	std::cout << "Allegro Init" << std::endl;
+	std::cout << "LIBRARY INIT	-Allegro 5.1.7" << std::endl;
 
 	//ALLEGRO ADDONS
 	al_install_keyboard();
@@ -55,7 +55,7 @@ int main(int argc, char **argv)
 
 	al_toggle_display_flag(display, ALLEGRO_FULLSCREEN_WINDOW, false);
 
-	std::cout << "Display created " << al_get_display_width(display) << "*" << al_get_display_height(display) << std::endl;
+	std::cout << "DISPLAY CREATE	-w" << al_get_display_width(display) << " -h" << al_get_display_height(display) << std::endl;
 	
 	//IMAGE SETTINGS
 	al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR | ALLEGRO_MAG_LINEAR | ALLEGRO_MIPMAP);
@@ -88,7 +88,7 @@ int main(int argc, char **argv)
 
 	//al_grab_mouse(display);
 
-	std::cout << "GWEN Init successful" << std::endl;
+	std::cout << "LIBRARY INIT	-Gwen GUI" << std::endl;
 
 	//EVENT INIT
 	event_queue = al_create_event_queue();
@@ -108,7 +108,7 @@ int main(int argc, char **argv)
 	//States::Manager::getInstance()->changeState(ATX::Main::getInstance());
 	States::Manager::getInstance()->changeState(Scenario::Menu::getInstance());
 
-	std::cout << "Loading Done" << std::endl;
+	std::cout << std::endl << "Initial Loading Done" << std::endl << std::endl;
 
 	//EVENT LOOP
 	while (!States::Manager::done)

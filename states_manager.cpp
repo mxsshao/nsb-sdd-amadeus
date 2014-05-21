@@ -68,6 +68,7 @@ void States::Manager::handleEvents(ALLEGRO_EVENT& ev)
 		{
 			nStates.back()->resize(this);
 		}
+		std::cout << "DISPLAY RESIZE	-w" << al_get_display_width(display) << " -h" << al_get_display_height(display) << std::endl;
 	}
 	else
 	{

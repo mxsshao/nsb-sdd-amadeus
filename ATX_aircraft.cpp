@@ -14,6 +14,8 @@ ATX::Structs::Waypoint ATX::Aircraft::nWaypoints[20];
 
 ATX::Aircraft::Aircraft(Gwen::Controls::WindowControl* parent, float ex, float ey, float ez, int start, double eSpeed, double eHeading, int eDestination, std::string type)
 {
+	std::cout << "NEW AIRCRAFT	-x" << ex << " -y" << ey << " -z" << ez << " -s" << start << " -v" << eSpeed << " -h" << eHeading << " -d" << eDestination <<std::endl;
+
 	plane = al_load_bitmap(std::string("Resources/").append(type).append(".png").c_str());
 	state = 15.0f;
 

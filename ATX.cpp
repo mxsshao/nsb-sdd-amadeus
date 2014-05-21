@@ -5,6 +5,8 @@ ATX::Main ATX::Main::mMain;
 
 void ATX::Main::initialize(States::Manager* manager)
 {
+	std::cout << "MODULE		-Simulation" << std::endl;
+
 	canvas = manager->getCanvas();
 
 	bar = al_load_bitmap("Resources/bar.png");
@@ -96,8 +98,8 @@ void ATX::Main::initialize(States::Manager* manager)
 
 void ATX::Main::resize(States::Manager* manager)
 {
-	int originalW = displayW;
-	int originalH = displayH;
+	float originalW = displayW;
+	float originalH = displayH;
 
 
 	displayW = al_get_display_width(manager->getDisplay());
@@ -125,21 +127,27 @@ void ATX::Main::resize(States::Manager* manager)
 		al_destroy_bitmap(screen);
 		screen = al_create_bitmap(displayW, displayH);
 
-		float a = window->GetBounds().x;
-		float b = window->GetBounds().y;
-
 		window->SetSize(400, 300);
-		window->SetPos(displayW - a + originalW, displayH - b + originalH);
-
-		a = testControl->GetBounds().y;
+		window->SetPos(displayW - 400, displayH-300);
 
 		testControl->SetSize(200, 300);
-		testControl->SetPos(testControl->GetPos().x, displayH - a + originalH);
+		testControl->SetPos(0, displayH-300);
 
 		radarWindow->SetSize(256, 256 + 28);
-		//radarWindow->SetPos(radarWindow->GetPos().x, displayH + radarWindow->GetPos().y - originalH);
+		radarWindow->SetPos(0,0);
 		radarPanel->SetSize(radarWindow->GetBounds().w - 8, radarWindow->GetBounds().w - 8);
 		radarPanel->Dock(Gwen::Pos::Top);
+
+		//window->SetSize(400, 300);
+		//window->SetPos(window->GetPos().x / originalW * displayW, window->GetPos().y / originalH * displayH);
+
+		//testControl->SetSize(200, 300);
+		//testControl->SetPos(testControl->GetPos().x, testControl->GetPos().y / originalH * displayH);
+
+		//radarWindow->SetSize(256, 256 + 28);
+		////radarWindow->SetPos(radarWindow->GetPos().x, displayH + radarWindow->GetPos().y - originalH);
+		//radarPanel->SetSize(radarWindow->GetBounds().w - 8, radarWindow->GetBounds().w - 8);
+		//radarPanel->Dock(Gwen::Pos::Top);
 	}
 
 }
