@@ -175,7 +175,6 @@ void ATX::Aircraft::navigate(std::list<int>* destination)
 	{
 		nPoints.push_back(nWaypoints[(*iter)]);
 	}
-
 }
 
 void ATX::Aircraft::select()

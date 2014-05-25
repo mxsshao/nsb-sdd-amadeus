@@ -88,6 +88,23 @@ void ATX::Main::initialize(States::Manager* manager)
 	first = true;
 	resize(manager);
 
+	textWindow = new Gwen::Controls::WindowControl(canvas);
+	textWindow->MakeScroll();
+	textWindow->GetScroll()->SetScroll(false, true);
+	textWindow->GetScroll()->SetAutoHideBars(false);
+	textWindow->SetSize(400, 300);
+	textWindow->onResizeUp.Add(this, &ATX::Main::textWindowResize);
+	nLabels.push_back(new Gwen::Controls::Label(textWindow));
+	nLabels.back()->SetText(L"16:12 | Ground >> DL716 | Turn left heading 190\n");
+	nLabels.back()->SetWrap(true);
+	nLabels.back()->Dock(Gwen::Pos::Top);
+	nLabels.back()->SizeToContents();
+	nLabels.push_back(new Gwen::Controls::Label(textWindow));
+	nLabels.back()->SetText(L"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+	nLabels.back()->SetWrap(true);
+	nLabels.back()->Dock(Gwen::Pos::Top);
+	nLabels.back()->SizeToContents();
+
 	Aircraft::initialize();
 
 	//nAircraft.push_back(new Aircraft(window, 1000, 1000, 0, 3, 0.5f, 90.0f, 2, "MU330"));
@@ -168,6 +185,15 @@ void ATX::Main::windowResize()
 	}
 }
 
+void ATX::Main::textWindowResize()
+{
+	std::list<Gwen::Controls::Label*>::iterator iter;
+	for (iter = nLabels.begin(); iter != nLabels.end(); iter++)
+	{
+		(*iter)->SizeToContents();
+	}
+}
+
 void ATX::Main::resetSelected()
 {
 	if (!nAircraft.empty())
@@ -206,6 +232,8 @@ void ATX::Main::handleEvents(ALLEGRO_EVENT &ev)
 	if (ev.type == ALLEGRO_EVENT_TIMER)
 	{
 		update();
+		//std::cout << label->Height() << std::endl;
+		//std::cout << label->m_Text->Height() << std::endl;
 	}
 	else if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
 	{

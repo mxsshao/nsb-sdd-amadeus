@@ -41,6 +41,10 @@ namespace ATX
 		ALLEGRO_BITMAP* radarRender;
 		void radarWindowResize();
 
+		Gwen::Controls::WindowControl* textWindow;
+		void textWindowResize();
+		std::list<Gwen::Controls::Label*> nLabels;
+
 		int displayW;
 		int displayH;
 		int offsetWidth;

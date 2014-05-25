@@ -27,6 +27,7 @@
 #include "Gwen/Controls/VerticalSlider.h"
 #include "Gwen/Controls/ImagePanel.h"
 #include "Gwen/Controls/ScrollControl.h"
+#include "Gwen/Controls/RichLabel.h"
 
 #include "tinyxml2.h"
 
