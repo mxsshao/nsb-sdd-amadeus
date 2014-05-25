@@ -96,6 +96,7 @@ void ATX::Main::initialize(States::Manager* manager)
 	textWindow->onResizeUp.Add(this, &ATX::Main::textWindowResize);
 	nLabels.push_back(new Gwen::Controls::Label(textWindow));
 	nLabels.back()->SetText(L"16:12 | Ground >> DL716 | Turn left heading 190\n");
+	//nLabels.back()->SetTextColor(Gwen::Colors::Blue);
 	nLabels.back()->SetWrap(true);
 	nLabels.back()->Dock(Gwen::Pos::Top);
 	nLabels.back()->SizeToContents();
@@ -327,7 +328,8 @@ void ATX::Main::update()
 			if ((*iter)->done)
 			{
 				bool shouldSelect = (*iter)->getSelected();
-				breakaway();
+				if (shouldSelect)
+					breakaway();
 				delete(*iter);
 				nAircraft.erase(iter++);
 				if (iter != nAircraft.end() && shouldSelect)
