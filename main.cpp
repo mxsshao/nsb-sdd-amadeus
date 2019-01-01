@@ -72,7 +72,7 @@ int main(int argc, char **argv)
 	Gwen::Renderer::Allegro* renderer = new Gwen::Renderer::Allegro();
 	Gwen::Skin::TexturedBase defaultskin(renderer);
 	defaultskin.SetRender(renderer);
-	defaultskin.Init("Resources/defaultskin.png");
+	defaultskin.Init("Resources/defaultskin2.png");
 	defaultskin.SetDefaultFont(L"Resources/OpenSans.ttf", 14);
 	Gwen::Controls::Canvas* canvas = new Gwen::Controls::Canvas(&defaultskin);
 	canvas->SetSize(al_get_display_width(display), al_get_display_height(display));

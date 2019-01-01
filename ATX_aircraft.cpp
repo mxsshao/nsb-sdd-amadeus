@@ -56,7 +56,7 @@ ATX::Aircraft::Aircraft(Gwen::Controls::WindowControl* parent, float ex, float e
 void ATX::Aircraft::initialize()
 {
 	tinyxml2::XMLDocument document;
-	document.LoadFile("derp.xml");
+	document.LoadFile("derp2.xml");
 
 	tinyxml2::XMLElement* element = document.FirstChildElement("Source");
 
