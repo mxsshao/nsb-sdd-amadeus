@@ -1,6 +1,6 @@
 # SDD 2014 - Major Project - Proof of Concept Version
 
-Predecessor of <https://github.com/mxsshao/nsb-sdd-atx>.
+Predecessor of <https://github.com/mxsshao/nsb-sdd-atx>
 
 ## Images
 <img src="_screenshots/2.png" />
